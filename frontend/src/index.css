@@ -1,0 +1,108 @@
+.gold {
+  background: radial-gradient(
+      ellipse farthest-corner at right bottom,
+      #fedb37 0%,
+      #fdb931 8%,
+      #9f7928 30%,
+      #8a6e2f 40%,
+      transparent 80%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at left top,
+      #ffffff 0%,
+      #ffffac 8%,
+      #d1b464 25%,
+      #5d4a1f 62.5%,
+      #5d4a1f 100%
+    );
+  color: radial-gradient(
+      ellipse farthest-corner at right bottom,
+      #fedb37 0%,
+      #fdb931 8%,
+      #9f7928 30%,
+      #8a6e2f 40%,
+      transparent 80%
+    ),
+    radial-gradient(
+      ellipse farthest-corner at left top,
+      #ffffff 0%,
+      #ffffac 8%,
+      #d1b464 25%,
+      #5d4a1f 62.5%,
+      #5d4a1f 100%
+    );
+}
+
+.noborder {
+  border-top: 0;
+  border-left: 0;
+  border-bottom: 0;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.fas {
+  color: #ed9003;
+}
+
+.fa {
+  color: #ed9003;
+}
+
+main {
+  min-height: 80vh;
+}
+
+.margins {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.H1 {
+  font-size: 3rem;
+  border-color: #ed9003;
+
+  padding: 1.5rem;
+}
+
+.center {
+  margin: auto;
+}
+
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+}
+.carousel-caption {
+  position: absolute;
+  top: 0;
+}
+
+.carousel {
+  background-color: white;
+}
+
+.carousel-caption h6 {
+  color: #fff;
+  font-size: 20px;
+}
+
+.carousel img {
+  height: 400px;
+  width: 800px;
+  padding: 30px;
+  margin-bottom: 40px;
+
+  border-radius: 10%;
+}
+.carousel a {
+  margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+  .image {
+    width: 20px;
+    height: 20px;
+  }
+}

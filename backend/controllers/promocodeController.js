@@ -1,4 +1,4 @@
-import PromoCode from '../models/promoCode.js'
+import PromoCode from '../models/promocode.js'
 import asyncHandler from 'express-async-handler'
 
 const getCode = asyncHandler(async (req, res) => {

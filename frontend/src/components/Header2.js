@@ -43,7 +43,7 @@ const Header2 = ({ history }) => {
       <Row className='justify-content-center align-items-center'>
         <Col md={12} sm={12} xs={{ span: 12 }}>
           <Navbar expand='lg' style={{ backgroundColor: 'black' }}>
-            <Col md={2} sm={3} xs={3} style={{ margin: '0px' }}>
+            <Col md={2} sm={3} xs={2} style={{ margin: '0px' }}>
               <Navbar.Brand
                 href='/'
                 style={{

@@ -1,8 +1,9 @@
 //import logo from './logo.svg';
 
 import { Container } from 'react-bootstrap'
-import Header from './components/Header'
+import Header2 from './components/Header2'
 import Footer from './components/Footer'
+import Sidebar from './components/Sidebar'
 import HomeScreen from './screens/HomeScreen'
 import GuestCheckoutScreen from './screens/GuestCheckoutScreen'
 import productScreen from './screens/ProductScreen'
@@ -36,12 +37,11 @@ import BrandsListScreen from './screens/BrandsListScreen'
 function App() {
   return (
     <Router>
-      <Header />
-
-      <main className='py-3'>
-        <Container>
-          <Route path='/search/:keyword?' component={ProductsScreen} />
+      <div id='outer-container'>
+        <Header2 style={{ position: 'fixed' }} />
+        <main>
           <Route path='/' component={HomeScreen} exact />
+          <Route path='/search/:keyword?' component={ProductsScreen} />
           <Route path='/product/:id' component={productScreen} exact />
           <Route path='/cart/:id?' component={CartScreen} />
           <Route path='/login' component={LoginScreen} />
@@ -62,10 +62,10 @@ function App() {
             component={ProductListScreen}
             exact
           />
-        </Container>
-      </main>
+        </main>
 
-      <Footer />
+        <Footer />
+      </div>
     </Router>
   )
 }

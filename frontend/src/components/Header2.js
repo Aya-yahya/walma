@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import logo from '../walmalogo.png'
-
+import Sidebar from './Sidebar'
 import SearchBox from './SearchBox'
 import { LinkContainer } from 'react-router-bootstrap'
 import { logout } from '../actions/userActions'
@@ -15,7 +15,7 @@ import {
   Row,
   NavLink,
 } from 'react-bootstrap'
-const Header = ({ history }) => {
+const Header2 = ({ history }) => {
   const dispatch = useDispatch()
   const [keyword, setKeyword] = useState('')
   const userLogin = useSelector((state) => state.userLogin)
@@ -40,26 +40,27 @@ const Header = ({ history }) => {
   }
   return (
     <header>
-      <Row>
+      <Row className='justify-content-center align-items-center'>
         <Col md={12} sm={12} xs={{ span: 12 }}>
           <Navbar expand='lg' style={{ backgroundColor: 'black' }}>
-            <Col md={2} sm={4} xs={4}>
+            <Col md={2} sm={3} xs={3} style={{ margin: '0px' }}>
               <Navbar.Brand
                 href='/'
                 style={{
-                  marginLeft: '2rem',
+                  marginLeft: '1rem',
                   marginBottom: '0px',
+                  marginRight: '0px',
                   marginTop: '0px',
                   padding: '0px',
                 }}
               >
-                <img src={logo} />
+                <img src={logo} style={{ width: '80px', height: '70px' }} />
               </Navbar.Brand>
             </Col>
             <Col
-              md={{ span: 4, order: 1 }}
-              sm={{ span: 12, order: 2 }}
-              xs={{ span: 12, order: 2 }}
+              md={{ span: 4 }}
+              sm={{ span: 6 }}
+              xs={{ span: 6 }}
               className='mr-auto'
             >
               <Route
@@ -67,56 +68,27 @@ const Header = ({ history }) => {
               />
             </Col>
             <Col
-              md={{ span: 6, order: 2 }}
-              sm={{ span: 6, order: 1 }}
-              xs={{ span: 6, order: 1 }}
+              md={{ span: 6 }}
+              sm={{ span: 3 }}
+              xs={{ span: 3 }}
+              // style={{ backgroundColor: 'red' }}
             >
-              <Navbar.Toggle aria-controls='sidebarMenu' />
-              <Navbar.Collapse id='sidebarMenu'>
-                <Nav.Link href='#home'>Home</Nav.Link>
-                <Nav.Link href='#link'>Link</Nav.Link>
-              </Navbar.Collapse>
               <Nav className='flex-row justify-content-end'>
                 <Nav.Item>
                   <Nav.Link href='/cart'>
-                    <i className='fas fa-shopping-cart fa-lg'>
-                      <sup>{numItems}</sup>
+                    <i
+                      className='material-icons-outlined'
+                      style={{ fontSize: '30px' }}
+                    >
+                      shopping_cart
                     </i>
                   </Nav.Link>
                 </Nav.Item>
-
-                <Nav.Item className='d-block d-md-none d-lg-none'>
-                  <Dropdown>
-                    <Dropdown.Toggle as={NavLink} className='noCaret '>
-                      <i
-                        class='fas fa-bars fa-lg'
-                        style={{ color: '#ed9003', marginLeft: '1rem' }}
-                      ></i>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      {userInfo ? (
-                        <LinkContainer to={'/profile'}>
-                          <Dropdown.Item key={'profile'}>Profile</Dropdown.Item>
-                        </LinkContainer>
-                      ) : (
-                        <LinkContainer to={'/login'}>
-                          <Dropdown.Item key={'login'}>Login</Dropdown.Item>
-                        </LinkContainer>
-                      )}
-                      <LinkContainer to={'/aboutus'}>
-                        <Dropdown.Item key={'aboutus'}>About us</Dropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to={'/search'}>
-                        <Dropdown.Item key={'products'}>Products</Dropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to={'/offers'}>
-                        <Dropdown.Item key={'offers'}>offers</Dropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to={'/callus'}>
-                        <Dropdown.Item key={'callus'}>Contact</Dropdown.Item>
-                      </LinkContainer>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                <Nav.Item
+                  className='d-block d-md-none d-lg-none '
+                  style={{ marginLeft: '1.5rem' }}
+                >
+                  <Sidebar />
                 </Nav.Item>
                 <Nav.Item className='d-none d-lg-block d-md-block'>
                   <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -202,4 +174,4 @@ const Header = ({ history }) => {
   )
 }
 
-export default Header
+export default Header2

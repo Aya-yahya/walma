@@ -120,6 +120,10 @@ main {
     width: 20px;
     height: 20px;
   }
+  .imge {
+    width: 40px;
+    height: 40px;
+  }
 }
 .bm-burger-button {
   position: absolute;

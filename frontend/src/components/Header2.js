@@ -15,6 +15,7 @@ import {
   Row,
   NavLink,
 } from 'react-bootstrap'
+
 const Header2 = ({ history }) => {
   const dispatch = useDispatch()
   const [keyword, setKeyword] = useState('')
@@ -42,12 +43,21 @@ const Header2 = ({ history }) => {
     <header>
       <Row className='justify-content-center align-items-center'>
         <Col md={12} sm={12} xs={{ span: 12 }}>
-          <Navbar expand='lg' style={{ backgroundColor: 'black' }}>
-            <Col md={2} sm={3} xs={2} style={{ margin: '0px' }}>
+          <Navbar
+            expand='lg'
+            style={{ backgroundColor: 'black', marginLeft: '0px' }}
+          >
+            <Col
+              md={2}
+              sm={3}
+              xs={2}
+              //  style={{ margin: '0px', backgroundColor: 'red' }}
+            >
               <Navbar.Brand
                 href='/'
                 style={{
-                  marginLeft: '1rem',
+                  marginLeft: '0.5rem',
+
                   marginBottom: '0px',
                   marginRight: '0px',
                   marginTop: '0px',
@@ -55,20 +65,24 @@ const Header2 = ({ history }) => {
                 }}
               >
                 <img
-                  src={logo}
                   className='imge'
-                  style={{ width: '80px', height: '70px' }}
+                  src={logo}
+                  //className='imge'
+                  //   style={{ width: '100px', height: '80px' }}
                 />
               </Navbar.Brand>
             </Col>
             <Col
               md={{ span: 4 }}
               sm={{ span: 6 }}
-              xs={{ span: 6 }}
-              className='mr-auto'
+              xs={{ span: 4 }}
+              //   style={{ backgroundColor: 'red' }}
+              // className='mr-auto'
             >
               <Route
-                render={({ history }) => <SearchBox history={history} />}
+                render={({ history }) => (
+                  <SearchBox history={history} style={{ position: 'static' }} />
+                )}
               />
             </Col>
             <Col

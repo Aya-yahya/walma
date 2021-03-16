@@ -121,8 +121,11 @@ main {
     height: 20px;
   }
   .imge {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+
+    margin-left: 0rem;
+    margin-right: 0.5rem;
+    height: 60px;
   }
 }
 .bm-burger-button {

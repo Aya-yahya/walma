@@ -33,7 +33,7 @@ const HomeScreen = ({ match }) => {
 
   return (
     <>
-      <Row fluid style={{ backgroundColor: 'red', margin: '0px' }}>
+      <Row fluid style={{ margin: '0px' }}>
         <Image src={head} width='100%' height='300px' className='head' />
       </Row>
 
@@ -54,7 +54,7 @@ const HomeScreen = ({ match }) => {
           <>
             <Row>
               {products.map((product) => (
-                <Col key={product._id} sm={6} md={4} xs={6}>
+                <Col key={product._id} sm={6} md={3} xs={6}>
                   <Product product={product} />
                 </Col>
               ))}

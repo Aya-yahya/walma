@@ -54,7 +54,11 @@ const Header2 = ({ history }) => {
                   padding: '0px',
                 }}
               >
-                <Image src={logo} width='80px' height='80px' className='imge' />
+                <img
+                  src={logo}
+                  className='imge'
+                  style={{ width: '80px', height: '70px' }}
+                />
               </Navbar.Brand>
             </Col>
             <Col

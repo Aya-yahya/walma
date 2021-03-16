@@ -11,7 +11,19 @@ export default () => {
       <a className='menu-item' href='/'>
         Home
       </a>
-
+      {userInfo && userInfo.isAdmin && (
+        <>
+          <a className='menu-item' href='/admin/userlist'>
+            users list
+          </a>
+          <a className='menu-item' href='/admin/productlist'>
+            Products list
+          </a>
+          <a className='menu-item' href='/admin/orderlist'>
+            orders list
+          </a>
+        </>
+      )}
       {userInfo ? (
         <a className='menu-item' href='/profile'>
           profile

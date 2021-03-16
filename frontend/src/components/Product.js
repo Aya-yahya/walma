@@ -14,18 +14,18 @@ const Product = ({ product }) => {
         <Card.Img
           src={product.image}
           variant='top'
-          width='100px'
-          height='200px'
+          //  width='100px'
+          //  height='200px'
         />
       </Link>
       <Card.Body>
         <Link to={`/product/${product._id}`}>
-          <Card.Title as='h5' className='text-center'>
+          <Card.Title as='h6' className='text-center'>
             <strong>{product.name}</strong>
           </Card.Title>
         </Link>
         <Container className=' align-items-center justify-content-center'>
-          <Card.Text as='h4' className='text-center'>
+          <Card.Text as='h6' style={{ color: 'black' }} className='text-center'>
             {product.price} KD
           </Card.Text>
         </Container>

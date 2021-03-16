@@ -10,6 +10,7 @@ import {
   Image,
   Card,
   Badge,
+  Container,
 } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
@@ -112,36 +113,51 @@ const OrderScreen = ({ match, history }) => {
   ) : error ? (
     <Message variant='danger'>{error}</Message>
   ) : (
-    <>
-      <h3>Order: {order._id}</h3>
-      {order.user ? (
-        <>
-          <p>
-            <strong>Name: </strong>
-            {order.user.name}
-          </p>
-          <p>
-            <strong>Email: </strong>
-            <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
-          </p>
-        </>
-      ) : (
-        <></>
-      )}
+    <Container>
+      <h3 style={{ marginTop: '2rem' }} className='text-center '>
+        Order: {order._id}
+      </h3>
 
       <Row>
         <Col md={8}>
           <ListGroup variant='flush' className='center'>
+            {order.user ? (
+              <ListGroup.Item>
+                <h4
+                  style={{ marginTop: '2rem', marginBottom: '1rem' }}
+                  className='text-center '
+                >
+                  {' '}
+                  Customar Information
+                </h4>
+                <p className='text-center '>
+                  <strong>Name: </strong>
+                  {order.user.name}
+                </p>
+                <p className='text-center '>
+                  <strong>Email: </strong>
+                  <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+                </p>
+              </ListGroup.Item>
+            ) : (
+              <></>
+            )}
+
             <ListGroup.Item>
-              <h2 className='text-center'>Shipping</h2>
+              <h4
+                style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
+                className='text-center '
+              >
+                Shipping
+              </h4>
               <h5 className='text-center'>
                 {order.isDelivered ? (
-                  <Badge pill variant='success'>
+                  <Badge pill variant='dark'>
                     {' '}
                     Delivered on {order.deliveredAt}
                   </Badge>
                 ) : (
-                  <Badge pill variant='danger'>
+                  <Badge pill variant='dark'>
                     Not Delivered
                   </Badge>
                 )}
@@ -155,15 +171,20 @@ const OrderScreen = ({ match, history }) => {
               </p>
             </ListGroup.Item>
             <ListGroup.Item>
-              <h2 className='text-center'>Payment Method</h2>
+              <h4
+                style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
+                className='text-center '
+              >
+                Payment Method
+              </h4>
               <h5 className='text-center'>
                 {order.isPaid ? (
-                  <Badge pill variant='success'>
+                  <Badge pill variant='dark'>
                     {'                          '}
                     Paid on {order.paidAt}
                   </Badge>
                 ) : (
-                  <Badge pill variant='danger'>
+                  <Badge pill variant='dark'>
                     {'                        '}
                     Not Paid
                   </Badge>
@@ -176,7 +197,12 @@ const OrderScreen = ({ match, history }) => {
               </p>
             </ListGroup.Item>
             <ListGroup.Item>
-              <h2 className='text-center'>Order Items</h2>
+              <h4
+                style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
+                className='text-center '
+              >
+                Order Items
+              </h4>
               {order.orderItems.length === 0 ? (
                 <Message>Order is empty</Message>
               ) : (
@@ -198,7 +224,8 @@ const OrderScreen = ({ match, history }) => {
                           </Link>
                         </Col>
                         <Col md={3} xs={4} sm={4} className='center'>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x {item.price} KD= {item.qty * item.price}{' '}
+                          KD
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -209,7 +236,7 @@ const OrderScreen = ({ match, history }) => {
           </ListGroup>
         </Col>
         <Col md={4}>
-          <Card>
+          <Card style={{ marginTop: '2rem' }}>
             <ListGroup variant='flush'>
               <ListGroup.Item>
                 <h2 className='text-center'>Order Summary</h2>
@@ -217,25 +244,20 @@ const OrderScreen = ({ match, history }) => {
               <ListGroup.Item>
                 <Row className='text-center'>
                   <Col>Items</Col>
-                  <Col>${order.itemsPrice}</Col>
+                  <Col>{order.itemsPrice}KD</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row className='text-center'>
                   <Col>Shipping</Col>
-                  <Col>${order.shippingPrice}</Col>
+                  <Col>{order.shippingPrice}KD</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
-                <Row className='text-center'>
-                  <Col>Tax</Col>
-                  <Col>${order.taxPrice}</Col>
-                </Row>
-              </ListGroup.Item>
+
               <ListGroup.Item>
                 <Row className='text-center'>
                   <Col>Total</Col>
-                  <Col>${order.totalPrice}</Col>
+                  <Col>{order.totalPrice} KD</Col>
                 </Row>
               </ListGroup.Item>
               {!order.isPaid && (
@@ -271,7 +293,7 @@ const OrderScreen = ({ match, history }) => {
           </Card>
         </Col>
       </Row>
-    </>
+    </Container>
   )
 }
 

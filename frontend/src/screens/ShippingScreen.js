@@ -23,14 +23,12 @@ const ShippingScreen = ({ history }) => {
     0
   )
 
-  cart.shippingPrice = cart.itemsPrice > 100 ? 0 : 100
+  cart.shippingPrice = 2
 
   cart.taxPrice = Number((0.15 * cart.itemsPrice).toFixed(2))
 
   cart.totalPrice = (
-    Number(cart.itemsPrice) +
-    Number(cart.shippingPrice) +
-    Number(cart.taxPrice)
+    Number(cart.itemsPrice) + Number(cart.shippingPrice)
   ).toFixed(2)
 
   const orderCreate = useSelector((state) => state.orderCreate)
@@ -60,11 +58,16 @@ const ShippingScreen = ({ history }) => {
 
   return (
     <>
-      <FormContainer>
+      <FormContainer style={{ marginTop: '2rem' }}>
         <Form onSubmit={submitHandler}>
-          <Row>
+          <Row style={{ marginTop: '2rem' }}>
             <Col>
-              <h3>Shipping Address</h3>
+              <h4
+                style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
+                className='text-center '
+              >
+                Shipping Address
+              </h4>
               <Form.Group controlId='address'>
                 <Form.Label>Address</Form.Label>
                 <Form.Control
@@ -107,11 +110,14 @@ const ShippingScreen = ({ history }) => {
               </Form.Group>
             </Col>
             <Col>
-              <h3>Payment Method</h3>
+              <h4
+                style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
+                className='text-center '
+              >
+                Payment Method
+              </h4>
               <Form.Group>
-                <Form.Label as='legend'>Select Method</Form.Label>
-
-                <Col>
+                <Col className='center'>
                   <Form.Check
                     type='radio'
                     label='PayPal or Credit Card'

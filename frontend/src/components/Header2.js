@@ -27,17 +27,9 @@ const Header2 = ({ history }) => {
 
   const numItems = cartItems.length
 
-  const submitHandler = (e) => {
-    e.preventDefault()
-    if (keyword.trim()) {
-      history.push(`/search/${keyword}`)
-    } else {
-      history.push('/')
-    }
-  }
-
   const logoutHandler = () => {
     dispatch(logout())
+    window.location.replace('/')
   }
   return (
     <header>
@@ -75,7 +67,7 @@ const Header2 = ({ history }) => {
             <Col
               md={{ span: 4 }}
               sm={{ span: 6 }}
-              xs={{ span: 4 }}
+              xs={{ span: 5 }}
               //   style={{ backgroundColor: 'red' }}
               // className='mr-auto'
             >

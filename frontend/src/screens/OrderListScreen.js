@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
-import { Table, Button, Row, Col } from 'react-bootstrap'
+import { Table, Button, Row, Col, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -24,10 +24,15 @@ const OrderListScreen = ({ history }) => {
   }, [dispatch, history, userInfo])
 
   return (
-    <>
+    <Container>
       <Row className='align-items-center'>
         <Col>
-          <h1 className='text-center'>Orders</h1>
+          <h1
+            className='text-center'
+            style={{ marginTop: '2rem', marginBottom: '1rem' }}
+          >
+            Orders
+          </h1>
         </Col>
       </Row>
       {loading ? (
@@ -75,7 +80,7 @@ const OrderListScreen = ({ history }) => {
           </tbody>
         </Table>
       )}
-    </>
+    </Container>
   )
 }
 

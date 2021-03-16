@@ -78,72 +78,80 @@ const ProfileScreen = ({ location, history }) => {
     setShow(false)
   }
   return (
-    <Row>
-      <Col md={3} className='text-center'>
-        <h2>User Profile</h2>
-        {message && <Message variant='danger'>{message}</Message>}
-        {error && <Message variant='danger'>{error}</Message>}
-        {success && <Message variant='success'>Profile Updated</Message>}
-        {loading && <Loader />}
-        <Container>
-          <p>
-            <i className='far fa-user-circle fa-5x' id='adminmenu'></i>
-          </p>
+    <Container style={{ marginTop: '2rem' }}>
+      <Row>
+        <Col md={3} className='text-center'>
+          <h2>User Profile</h2>
+          {message && <Message variant='danger'>{message}</Message>}
+          {error && <Message variant='danger'>{error}</Message>}
+          {success && <Message variant='success'>Profile Updated</Message>}
+          {loading && <Loader />}
+          <Container>
+            <p>
+              <i className='far fa-user-circle fa-5x' id='adminmenu'></i>
+            </p>
 
-          <p>Name : {userInfo.name}</p>
-          <p>Email : {userInfo.email}</p>
-        </Container>
-      </Col>
+            <p>Name : {userInfo.name}</p>
+            <p>Email : {userInfo.email}</p>
+          </Container>
+        </Col>
 
-      <Col md={9}>
-        <h2 className='text-center'>Orders</h2>
-        {loadingOrders ? (
-          <Loader />
-        ) : errorOrders ? (
-          <Message variant='danger'>{errorOrders}</Message>
-        ) : (
-          <Table striped bordered hover responsive className='table-sm'>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th>PAID</th>
-                <th>DELIVERD</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.totalPrice}</td>
-                  <td>
-                    {order.isPaid ? (
-                      order.paidAt.substring(0, 10)
-                    ) : (
-                      <i className='fas fa-times' style={{ color: 'red' }}></i>
-                    )}
-                  </td>
-                  <td>
-                    {order.isDeliverd ? (
-                      order.deliverdAt.substring(0, 10)
-                    ) : (
-                      <i className='fas fa-times' style={{ color: 'red' }}></i>
-                    )}
-                  </td>
-                  <td>
-                    <LinkContainer to={`/order/${order._id}`}>
-                      <Button variant='light'>Details</Button>
-                    </LinkContainer>
-                  </td>
+        <Col md={9}>
+          <h2 className='text-center'>Orders</h2>
+          {loadingOrders ? (
+            <Loader />
+          ) : errorOrders ? (
+            <Message variant='danger'>{errorOrders}</Message>
+          ) : (
+            <Table striped bordered hover responsive className='table-sm'>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>DATE</th>
+                  <th>TOTAL</th>
+                  <th>PAID</th>
+                  <th>DELIVERD</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
-        )}
-      </Col>
-    </Row>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order._id}>
+                    <td>{order._id}</td>
+                    <td>{order.createdAt.substring(0, 10)}</td>
+                    <td>{order.totalPrice}</td>
+                    <td>
+                      {order.isPaid ? (
+                        order.paidAt.substring(0, 10)
+                      ) : (
+                        <i
+                          className='fas fa-times'
+                          style={{ color: 'red' }}
+                        ></i>
+                      )}
+                    </td>
+                    <td>
+                      {order.isDeliverd ? (
+                        order.deliverdAt.substring(0, 10)
+                      ) : (
+                        <i
+                          className='fas fa-times'
+                          style={{ color: 'red' }}
+                        ></i>
+                      )}
+                    </td>
+                    <td>
+                      <LinkContainer to={`/order/${order._id}`}>
+                        <Button variant='light'>Details</Button>
+                      </LinkContainer>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
+        </Col>
+      </Row>
+    </Container>
   )
 }
 

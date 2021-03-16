@@ -133,24 +133,10 @@ const ProductScreen = ({ history, match }) => {
                   <ListGroup.Item className='noborder'>
                     <Row className='align-items-center  justify-content-center'>
                       <Col
-                        md={6}
+                        // md={6}
                         className=' align-items-center justify-content-center'
                       >
                         <h4>Price : {product.price} KD</h4>
-                      </Col>
-                      <Col
-                        className='align-items-center  justify-content-center'
-                        style={{ marginTop: '20px' }}
-                        md={5}
-                      >
-                        <Button
-                          onClick={addToWishlist}
-                          className='btn  '
-                          style={{ backgroundColor: 'black' }}
-                          type='button'
-                        >
-                          <i class='fas fa-heart'></i> Add To WishList
-                        </Button>
                       </Col>
                     </Row>
                   </ListGroup.Item>

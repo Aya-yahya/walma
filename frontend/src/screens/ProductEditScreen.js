@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { Form, Button, Container } from 'react-bootstrap'
+import { Form, Button, Container, Col } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
@@ -101,60 +101,89 @@ const ProductEditScreen = ({ match, history }) => {
           <Message variant='danger'>{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter name'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId='price'>
-              <Form.Label>Price</Form.Label>
-              <Form.Control
-                type='number'
-                placeholder='Enter price'
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.File
-                id='image-file'
-                label='Choose file'
-                custom
-                onChange={uploadFileHandler}
-              ></Form.File>
-              {uploading && <h2>Uploading...</h2>}
-            </Form.Group>
+            <Form.Row className='margins'>
+              <Col md={2}>
+                <Form.Label column>
+                  <strong>Name</strong>
+                </Form.Label>
+              </Col>
+              <Col md={4}>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter name'
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value)
+                  }}
+                ></Form.Control>
+              </Col>
+              <Col md={2}>
+                <Form.Label column>
+                  <strong>Price</strong>
+                </Form.Label>
+              </Col>
+              <Col md={4}>
+                <Form.Control
+                  type='number'
+                  placeholder='Enter price'
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                ></Form.Control>
+              </Col>
+            </Form.Row>
+            <Form.Row className='margins'>
+              <Col md={2}>
+                <Form.Label column>
+                  <strong>Image</strong>
+                </Form.Label>
+              </Col>
+              <Col>
+                <Form.Control
+                  type='text'
+                  placeholder='Enter image url'
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                ></Form.Control>
+              </Col>
+              <Col>
+                <Form.File
+                  id='image-file'
+                  label='Choose file'
+                  custom
+                  onChange={uploadFileHandler}
+                ></Form.File>
+                {uploading && <h2>Uploading...</h2>}
+              </Col>
+            </Form.Row>
+            <Form.Row className='margins'>
+              <Col md={2}>
+                <Form.Label>
+                  <strong>Description</strong>
+                </Form.Label>
+              </Col>
+              <Col md={5}>
+                <Form.Control
+                  type='text'
+                  placeholder='Enter description'
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                ></Form.Control>
+              </Col>
+              <Col md={2}>
+                <Form.Label>
+                  <strong>Count in stock</strong>
+                </Form.Label>
+              </Col>
+              <Col md={3}>
+                <Form.Control
+                  type='number'
+                  placeholder='Enter count in stock'
+                  value={countInStock}
+                  onChange={(e) => setCountInStock(e.target.value)}
+                ></Form.Control>
+              </Col>
+            </Form.Row>
 
-            <Form.Group controlId='countInStock'>
-              <Form.Label>Count in stock</Form.Label>
-              <Form.Control
-                type='number'
-                placeholder='Enter count in stock'
-                value={countInStock}
-                onChange={(e) => setCountInStock(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId='description'>
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter description'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
             <Container className='text-center'>
               <Button
                 type='submit'

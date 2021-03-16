@@ -35,108 +35,110 @@ const RegisterScreen = ({ location, history }) => {
     }
   }
   return (
-    <FormContainer>
-      <h1 className='H1 text-center'>
-        <Badge style={{ backgroundColor: '#ed9003', color: 'black' }}>
-          Sign Up
-        </Badge>
-      </h1>
+    <Container>
+      <FormContainer>
+        <h1 className='H1 text-center'>
+          <Badge style={{ backgroundColor: '#ed9003', color: 'black' }}>
+            Sign Up
+          </Badge>
+        </h1>
 
-      {message && <Message variant='danger'>{message}</Message>}
-      {error && <Message variant='danger'>{error}</Message>}
-      {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
-        <Form.Group controlId='name' as={Row} className='margins'>
-          <Form.Label className='text-muted' column sm='3'>
-            <strong> Name </strong>
-          </Form.Label>
-          <Col sm='8'>
-            <Form.Control
-              calssName='form-control'
-              type='name'
-              placeholder='Enter Name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Col>
-        </Form.Group>
+        {message && <Message variant='danger'>{message}</Message>}
+        {error && <Message variant='danger'>{error}</Message>}
+        {loading && <Loader />}
+        <Form onSubmit={submitHandler}>
+          <Form.Group controlId='name' as={Row} className='margins'>
+            <Form.Label className='text-muted' column sm='3'>
+              <strong> Name </strong>
+            </Form.Label>
+            <Col sm='8'>
+              <Form.Control
+                calssName='form-control'
+                type='name'
+                placeholder='Enter Name'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              ></Form.Control>
+            </Col>
+          </Form.Group>
 
-        <Form.Group controlId='email' as={Row} className='margins'>
-          <Form.Label className='text-muted' column sm='3'>
-            <strong> Email Address </strong>
-          </Form.Label>
+          <Form.Group controlId='email' as={Row} className='margins'>
+            <Form.Label className='text-muted' column sm='3'>
+              <strong> Email Address </strong>
+            </Form.Label>
 
-          <Col sm='8'>
-            <Form.Control
-              calssName='form-control'
-              type='email'
-              placeholder='Enter Email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
-          </Col>
-        </Form.Group>
+            <Col sm='8'>
+              <Form.Control
+                calssName='form-control'
+                type='email'
+                placeholder='Enter Email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Col>
+          </Form.Group>
 
-        <Form.Group controlId='password' as={Row} className='margins'>
-          <Form.Label className='text-muted' column sm='3'>
-            <strong> Password </strong>
-          </Form.Label>
+          <Form.Group controlId='password' as={Row} className='margins'>
+            <Form.Label className='text-muted' column sm='3'>
+              <strong> Password </strong>
+            </Form.Label>
 
-          <Col sm='8'>
-            <Form.Control
-              calssName='form-control'
-              type='password'
-              placeholder='Enter Password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Form.Control>
-          </Col>
-        </Form.Group>
+            <Col sm='8'>
+              <Form.Control
+                calssName='form-control'
+                type='password'
+                placeholder='Enter Password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              ></Form.Control>
+            </Col>
+          </Form.Group>
 
-        <Form.Group controlId='confirmPassword' as={Row} className='margins'>
-          <Form.Label className='text-muted' column sm='3'>
-            <strong> Confirm Paasword </strong>
-          </Form.Label>
+          <Form.Group controlId='confirmPassword' as={Row} className='margins'>
+            <Form.Label className='text-muted' column sm='3'>
+              <strong> Confirm Paasword </strong>
+            </Form.Label>
 
-          <Col sm='8'>
-            <Form.Control
-              calssName='form-control'
-              type='password'
-              placeholder='Confirm Password'
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            ></Form.Control>
-          </Col>
-        </Form.Group>
-        <Container className='text-center'>
-          <Button
-            type='submit'
-            style={{
-              backgroundColor: 'black',
-              color: '#ed9003',
-              marginBottom: '30px',
-              marginTop: '30px',
-            }}
-          >
-            Register
-          </Button>
-        </Container>
-      </Form>
-
-      <Row className='py-3 text-center'>
-        <Col>
-          Have an Account?{'  '}
-          <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
-            <span
-              className='badge badge-pill '
-              style={{ backgroundColor: 'black', color: '#ed9003' }}
+            <Col sm='8'>
+              <Form.Control
+                calssName='form-control'
+                type='password'
+                placeholder='Confirm Password'
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              ></Form.Control>
+            </Col>
+          </Form.Group>
+          <Container className='text-center'>
+            <Button
+              type='submit'
+              style={{
+                backgroundColor: 'black',
+                color: '#ed9003',
+                marginBottom: '30px',
+                marginTop: '30px',
+              }}
             >
-              login
-            </span>
-          </Link>
-        </Col>
-      </Row>
-    </FormContainer>
+              Register
+            </Button>
+          </Container>
+        </Form>
+
+        <Row className='py-3 text-center'>
+          <Col>
+            Have an Account?{'  '}
+            <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+              <span
+                className='badge badge-pill '
+                style={{ backgroundColor: 'black', color: '#ed9003' }}
+              >
+                login
+              </span>
+            </Link>
+          </Col>
+        </Row>
+      </FormContainer>
+    </Container>
   )
 }
 

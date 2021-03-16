@@ -98,7 +98,7 @@ const CartScreen = ({ match, location, history }) => {
                     </Link>
                   </Col>
                   <Col md={2} xs={2} sm={2} className='center'>
-                    {item.price} KD
+                    <small>{item.price} KD</small>
                   </Col>
                   <Col md={2} xs={3} sm={3} className='center'>
                     <Form.Control

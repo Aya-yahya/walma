@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Col } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
@@ -54,7 +54,9 @@ const UserEditScreen = ({ match, history }) => {
         Go back
       </Link>
       <FormContainer>
-        <h1>Edit user</h1>
+        <h3 className='text-center' style={{ marginBottom: '2rem' }}>
+          Edit user
+        </h3>
 
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
@@ -65,35 +67,49 @@ const UserEditScreen = ({ match, history }) => {
           <Message variant='danger'>{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
-            <Form.Group controlId='name'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type='name'
-                placeholder='Enter name'
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId='email'>
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control
-                type='email'
-                placeholder='Enter email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-            <Form.Group controlId='isadmin'>
+            <Form.Row controlId='name' className='center'>
+              <Col md={2}>
+                <Form.Label>Name</Form.Label>
+              </Col>
+              <Col md={7}>
+                <Form.Control
+                  type='name'
+                  placeholder='Enter name'
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                ></Form.Control>
+              </Col>
+            </Form.Row>
+            <Form.Row controlId='email' className='center margins'>
+              <Col md={2}>
+                <Form.Label>Email Address</Form.Label>
+              </Col>
+              <Col md={7}>
+                <Form.Control
+                  type='email'
+                  placeholder='Enter email'
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                ></Form.Control>
+              </Col>
+            </Form.Row>
+            <Form.Row
+              controlId='isadmin'
+              className='center'
+              style={{ marginTop: '2rem', marginBottom: '1.5rem' }}
+            >
               <Form.Check
                 type='checkbox'
                 label='Is Admin?'
                 checked={isAdmin}
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
-            </Form.Group>
-            <Button type='submit' variant='primary'>
-              Update
-            </Button>
+            </Form.Row>
+            <Form.Row className='center'>
+              <Button type='submit' variant='primary'>
+                Update
+              </Button>
+            </Form.Row>
           </Form>
         )}
       </FormContainer>

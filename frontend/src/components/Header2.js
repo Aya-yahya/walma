@@ -29,7 +29,7 @@ const Header2 = ({ history }) => {
 
   const cart = useSelector((state) => state.cart)
   const { cartItems, lang } = cart
-
+  document.documentElement.dir = 'ltr'
   const numItems = cartItems.length
 
   const logoutHandler = () => {
@@ -55,19 +55,6 @@ const Header2 = ({ history }) => {
             expand='lg'
             style={{ backgroundColor: 'black', marginLeft: '0px' }}
           >
-            <Col
-              md={1}
-              sm={1}
-              xs={1}
-              className={
-                i18n.language === 'ar'
-                  ? 'd-block d-md-none d-lg-none '
-                  : 'd-none'
-              }
-              style={{ marginBottom: '40px' }}
-            >
-              <Sidebar />
-            </Col>
             <Col md={2} sm={3} xs={2}>
               <Navbar.Brand
                 href='/'
@@ -135,11 +122,7 @@ const Header2 = ({ history }) => {
                   </Button>
                 </Nav.Item>
                 <Nav.Item
-                  className={
-                    i18n.language === 'en'
-                      ? 'd-block d-md-none d-lg-none '
-                      : 'd-none'
-                  }
+                  className={'d-block d-md-none d-lg-none '}
                   style={{ margin: '10px' }}
                 >
                   <Sidebar />

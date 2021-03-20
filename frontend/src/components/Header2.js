@@ -76,8 +76,8 @@ const Header2 = ({ history }) => {
             </Col>
             <Col
               md={{ span: 4 }}
-              sm={{ span: 6 }}
-              xs={{ span: 5 }}
+              sm={{ span: 12, order: 5 }}
+              xs={{ span: 12, order: 5 }}
               //   style={{ backgroundColor: 'red' }}
               // className='mr-auto'
             >

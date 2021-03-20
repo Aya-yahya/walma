@@ -7,10 +7,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
 import { getUserDetails, updateUser } from '../actions/userActions'
 import { USER_UPDATE_RESET } from '../constants/userConstants'
+import { useTranslation } from 'react-i18next'
 
 const UserEditScreen = ({ match, history }) => {
   const userId = match.params.id
-
+  const { t, i18n } = useTranslation()
   const [name, setName] = useState('')
 
   const [email, setEmail] = useState('')
@@ -55,7 +56,7 @@ const UserEditScreen = ({ match, history }) => {
       </Link>
       <FormContainer>
         <h3 className='text-center' style={{ marginBottom: '2rem' }}>
-          Edit user
+          {t('editUser')}
         </h3>
 
         {loadingUpdate && <Loader />}
@@ -69,7 +70,7 @@ const UserEditScreen = ({ match, history }) => {
           <Form onSubmit={submitHandler}>
             <Form.Row controlId='name' className='center'>
               <Col md={2}>
-                <Form.Label>Name</Form.Label>
+                <Form.Label>{t('name')}</Form.Label>
               </Col>
               <Col md={7}>
                 <Form.Control
@@ -82,7 +83,7 @@ const UserEditScreen = ({ match, history }) => {
             </Form.Row>
             <Form.Row controlId='email' className='center margins'>
               <Col md={2}>
-                <Form.Label>Email Address</Form.Label>
+                <Form.Label>{t('email')}</Form.Label>
               </Col>
               <Col md={7}>
                 <Form.Control
@@ -100,14 +101,14 @@ const UserEditScreen = ({ match, history }) => {
             >
               <Form.Check
                 type='checkbox'
-                label='Is Admin?'
+                label={t('isadmin')}
                 checked={isAdmin}
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
             </Form.Row>
             <Form.Row className='center'>
               <Button type='submit' variant='primary'>
-                Update
+                {t('edit')}
               </Button>
             </Form.Row>
           </Form>

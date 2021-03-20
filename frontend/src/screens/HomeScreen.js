@@ -17,9 +17,11 @@ import {
   Container,
 } from 'react-bootstrap'
 import { listProducts } from '../actions/productActions'
+import { useTranslation } from 'react-i18next'
 
 const HomeScreen = ({ match }) => {
   const [select, setSelect] = useState('')
+  const { t, i18n } = useTranslation()
   const pageNumber = match.params.pageNumber || 1
   const keyword = match.params.keyword // remember we set this to keyword in App.js in the route
   const dispatch = useDispatch()
@@ -39,10 +41,10 @@ const HomeScreen = ({ match }) => {
 
       <Nav justify variant='tabs' defaultActiveKey='/home'>
         <Nav.Item>
-          <Nav.Link eventKey='link-1'>All Products</Nav.Link>
+          <Nav.Link eventKey='link-1'>{t('products')}</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey='link-1'>Offers</Nav.Link>
+          <Nav.Link eventKey='link-1'>{t('offers')}</Nav.Link>
         </Nav.Item>
       </Nav>
       <Container>

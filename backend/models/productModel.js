@@ -1,5 +1,11 @@
 import mongoose from 'mongoose'
+import mongooseIntl from 'mongoose-intl'
 import User from '../models/userModel.js'
+
+mongoose.plugin(mongooseIntl, {
+  languages: ['en', 'ar'],
+  defaultLanguage: 'en',
+})
 
 const productSchema = mongoose.Schema(
   {
@@ -11,6 +17,7 @@ const productSchema = mongoose.Schema(
     name: {
       type: String,
       required: true,
+      intl: true,
     },
     image: {
       type: String,
@@ -19,10 +26,12 @@ const productSchema = mongoose.Schema(
 
     category: {
       type: String,
+      intl: true,
     },
     description: {
       type: String,
       required: true,
+      intl: true,
     },
 
     price: {
@@ -38,7 +47,6 @@ const productSchema = mongoose.Schema(
   },
   { timestamps: true }
 )
-
 const Product = mongoose.model('Product', productSchema)
 
 export default Product

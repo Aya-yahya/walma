@@ -22,6 +22,7 @@ import UserListScreen from './screens/UserListScreen'
 import ProductEditScreen from './screens/ProductEditScreen'
 import ProductCreateScreen from './screens/ProductCreateScreen'
 import ProductsScreen from './screens/ProductsScreen'
+import { useTranslation } from 'react-i18next'
 /*
 import logo from './logo.svg'
 import './App.css'
@@ -35,6 +36,11 @@ import BrandsListScreen from './screens/BrandsListScreen'
 */
 
 function App() {
+  const { t, i18n } = useTranslation()
+  i18n.language === 'ar'
+    ? (document.documentElement.dir = 'rtl')
+    : (document.documentElement.dir = 'ltr')
+
   return (
     <Router>
       <div id='outer-container'>

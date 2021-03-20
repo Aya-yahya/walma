@@ -1,4 +1,10 @@
 import mongoose from 'mongoose'
+import mongooseIntl from 'mongoose-intl'
+
+mongoose.plugin(mongooseIntl, {
+  languages: ['en', 'ar'],
+  defaultLanguage: 'en',
+})
 
 const promoCodeSchema = mongoose.Schema(
   {
@@ -12,7 +18,6 @@ const promoCodeSchema = mongoose.Schema(
   },
   { timestamps: true }
 )
-
 const PromoCode = mongoose.model('PromoCode', promoCodeSchema)
 
 export default PromoCode

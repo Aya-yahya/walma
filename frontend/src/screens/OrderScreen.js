@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { PayPalButton } from 'react-paypal-button-v2'
+import { useTranslation } from 'react-i18next'
 import axios from 'axios'
 import {
   Button,
@@ -26,7 +27,7 @@ import {
 } from '../constants/orderConstants'
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id
-
+  const { t, i18n } = useTranslation()
   const [sdkReady, setSdkReady] = useState(false)
 
   const dispatch = useDispatch()
@@ -115,7 +116,7 @@ const OrderScreen = ({ match, history }) => {
   ) : (
     <Container>
       <h3 style={{ marginTop: '2rem' }} className='text-center '>
-        Order: {order._id}
+        {t('orderid', { val: order._id })}
       </h3>
 
       <Row>
@@ -128,14 +129,14 @@ const OrderScreen = ({ match, history }) => {
                   className='text-center '
                 >
                   {' '}
-                  Customar Information
+                  {t('customarinfo')}
                 </h4>
                 <p className='text-center '>
-                  <strong>Name: </strong>
+                  <strong>{t('name')} </strong>
                   {order.user.name}
                 </p>
                 <p className='text-center '>
-                  <strong>Email: </strong>
+                  <strong>{t('email')}</strong>
                   <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
                 </p>
               </ListGroup.Item>
@@ -148,23 +149,23 @@ const OrderScreen = ({ match, history }) => {
                 style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
                 className='text-center '
               >
-                Shipping
+                {t('shippinginfo')}
               </h4>
               <h5 className='text-center'>
                 {order.isDelivered ? (
                   <Badge pill variant='dark'>
                     {' '}
-                    Delivered on {order.deliveredAt}
+                    {t('delvon', { val: order.deliveredAt })}
                   </Badge>
                 ) : (
                   <Badge pill variant='dark'>
-                    Not Delivered
+                    {t('notDelv')}
                   </Badge>
                 )}
               </h5>
 
               <p className='text-center'>
-                <strong>Address: </strong>
+                <strong>{t('address')}: </strong>
                 {order.shippingAddress.address},{order.shippingAddress.city} ,
                 {order.shippingAddress.postalCode} ,
                 {order.shippingAddress.country}
@@ -175,24 +176,24 @@ const OrderScreen = ({ match, history }) => {
                 style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
                 className='text-center '
               >
-                Payment Method
+                {t('payment')}
               </h4>
               <h5 className='text-center'>
                 {order.isPaid ? (
                   <Badge pill variant='dark'>
                     {'                          '}
-                    Paid on {order.paidAt}
+                    {t('paidon', { val: order.paidAt })}
                   </Badge>
                 ) : (
                   <Badge pill variant='dark'>
                     {'                        '}
-                    Not Paid
+                    {t('notpaid')}
                   </Badge>
                 )}
               </h5>
 
               <p className='text-center'>
-                <strong>Method: </strong>
+                <strong>{t('method')}: </strong>
                 {order.paymentMethod}
               </p>
             </ListGroup.Item>
@@ -201,7 +202,7 @@ const OrderScreen = ({ match, history }) => {
                 style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
                 className='text-center '
               >
-                Order Items
+                {t('order')}
               </h4>
               {order.orderItems.length === 0 ? (
                 <Message>Order is empty</Message>
@@ -220,7 +221,7 @@ const OrderScreen = ({ match, history }) => {
                         </Col>
                         <Col md={3} xs={4} sm={4} className='center'>
                           <Link to={`/product/${item.product}`}>
-                            {item.name}
+                            {item.name[i18n.language]}
                           </Link>
                         </Col>
                         <Col md={3} xs={4} sm={4} className='center'>
@@ -239,25 +240,25 @@ const OrderScreen = ({ match, history }) => {
           <Card style={{ marginTop: '2rem' }}>
             <ListGroup variant='flush'>
               <ListGroup.Item>
-                <h2 className='text-center'>Order Summary</h2>
+                <h2 className='text-center'>{t('summary')}</h2>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row className='text-center'>
-                  <Col>Items</Col>
+                  <Col>{t('order')}</Col>
                   <Col>{order.itemsPrice}KD</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row className='text-center'>
-                  <Col>Shipping</Col>
+                  <Col>{t('ship')}</Col>
                   <Col>{order.shippingPrice}KD</Col>
                 </Row>
               </ListGroup.Item>
 
               <ListGroup.Item>
                 <Row className='text-center'>
-                  <Col>Total</Col>
-                  <Col>{order.totalPrice} KD</Col>
+                  <Col>{t('TOTAL')}</Col>
+                  <Col>{order.totalPrice}KD</Col>
                 </Row>
               </ListGroup.Item>
               {!order.isPaid && (
@@ -285,7 +286,7 @@ const OrderScreen = ({ match, history }) => {
                       className='btn btn-block'
                       onClick={deliverHandler}
                     >
-                      Mark as delivered
+                      {t('delv')}
                     </Button>
                   </ListGroup.Item>
                 )}

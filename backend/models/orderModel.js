@@ -1,4 +1,10 @@
 import mongoose from 'mongoose'
+import mongooseIntl from 'mongoose-intl'
+
+mongoose.plugin(mongooseIntl, {
+  languages: ['en', 'ar'],
+  defaultLanguage: 'en',
+})
 
 const orderSchema = mongoose.Schema(
   {
@@ -9,7 +15,7 @@ const orderSchema = mongoose.Schema(
     },
     orderItems: [
       {
-        name: { type: String, required: true },
+        name: { type: String, required: true, intl: true },
         qty: { type: Number, required: true },
         image: { type: String, required: true },
         price: { type: Number, required: true },
@@ -43,11 +49,6 @@ const orderSchema = mongoose.Schema(
       default: 0.0,
     },
 
-    taxPrice: {
-      type: Number,
-      required: true,
-      default: 0.0,
-    },
     shippingPrice: {
       type: Number,
       required: true,
@@ -77,7 +78,6 @@ const orderSchema = mongoose.Schema(
   },
   { timestamps: true }
 )
-
 const Order = mongoose.model('Order', orderSchema)
 
 export default Order

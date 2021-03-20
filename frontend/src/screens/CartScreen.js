@@ -15,10 +15,11 @@ import { addToCart, removeFromCart } from '../actions/cartActions'
 import React, { useEffect, useState } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { useTranslation } from 'react-i18next'
 import Message from '../components/Message'
 
 const CartScreen = ({ match, location, history }) => {
+  const { t, i18n } = useTranslation()
   const productId = match.params.id
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -60,7 +61,9 @@ const CartScreen = ({ match, location, history }) => {
     e.preventDefault()
     dispatch(login(email, password))
     setShow(false)
-    history.push('/shipping')
+    if (userInfo) {
+      history.push('/shipping')
+    }
   }
   return (
     <Row>
@@ -69,12 +72,10 @@ const CartScreen = ({ match, location, history }) => {
           className='text-center'
           style={{ marginTop: '20px', marginBottom: '20px' }}
         >
-          Shopping Cart
+          {t('Shopping-Cart')}
         </h1>
         {cartItems.length === 0 ? (
-          <Message>
-            Your cart is empty<Link to='/'>Go Back</Link>
-          </Message>
+          <Message> {t('empty-Cart')}</Message>
         ) : (
           <ListGroup variant='flush'>
             {cartItems.map((item) => (
@@ -94,7 +95,7 @@ const CartScreen = ({ match, location, history }) => {
                   </Col>
                   <Col md={3} xs={3} sm={3} className='center'>
                     <Link className='mr-auto' to={`/product/${item._id}`}>
-                      <h6>{item.name}</h6>
+                      <h6>{item.name['i18n.language']}</h6>
                     </Link>
                   </Col>
                   <Col md={2} xs={2} sm={2} className='center'>
@@ -137,16 +138,17 @@ const CartScreen = ({ match, location, history }) => {
           <ListGroup variant='flush'>
             <ListGroup.Item>
               <h2 className='text-center'>
-                Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-                items
+                {t('item', {
+                  val: cartItems.reduce((acc, item) => acc + item.qty, 0),
+                })}
               </h2>
 
               <h6 className='text-center'>
-                Total Price :
-                {cartItems
-                  .reduce((acc, item) => acc + item.qty * item.price, 0)
-                  .toFixed(3)}{' '}
-                KD
+                {t('total', {
+                  val: cartItems
+                    .reduce((acc, item) => acc + item.qty * item.price, 0)
+                    .toFixed(3),
+                })}
               </h6>
             </ListGroup.Item>
             <ListGroup.Item>
@@ -157,7 +159,7 @@ const CartScreen = ({ match, location, history }) => {
                 disabled={cartItems.length === 0}
                 onClick={checkoutHandled}
               >
-                Proceed To Checkout
+                {t('Proceed')}
               </Button>
             </ListGroup.Item>
           </ListGroup>
@@ -182,7 +184,7 @@ const CartScreen = ({ match, location, history }) => {
               color: '#ed9003',
             }}
           >
-            Login To your account
+            {t('Login')}
           </Modal.Title>
         </Modal.Header>
         <Form onSubmit={loginHandler}>
@@ -190,7 +192,7 @@ const CartScreen = ({ match, location, history }) => {
             <Form.Group controlId='email'>
               <Row>
                 <Col md={3}>
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label> {t('email')}</Form.Label>
                 </Col>
                 <Col md={8}>
                   <Form.Control
@@ -205,7 +207,7 @@ const CartScreen = ({ match, location, history }) => {
             <Form.Group controlId='password'>
               <Row>
                 <Col md={3}>
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>{t('password')}</Form.Label>
                 </Col>
                 <Col md={8}>
                   <Form.Control
@@ -227,7 +229,7 @@ const CartScreen = ({ match, location, history }) => {
                 color: 'black',
               }}
             >
-              Login
+              {t('login')}
             </Button>
             <Button
               variant='secondary'
@@ -237,7 +239,7 @@ const CartScreen = ({ match, location, history }) => {
                 color: 'black',
               }}
             >
-              Continue as Guest
+              {t('guest')}
             </Button>
           </Modal.Footer>
         </Form>

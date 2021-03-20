@@ -4,7 +4,8 @@ import express from 'express'
 import uploadRoutes from './routes/uploadRoutes.js'
 import connectDB from './config/db.js'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
-
+import mongoose from 'mongoose'
+import mongooseIntl from 'mongoose-intl'
 import path from 'path'
 import productRoutes from './routes/productRoute.js'
 import colors from 'colors'
@@ -25,7 +26,10 @@ app.use(express.json())
 app.use((req, res, next) => {
   next()
 })
-
+mongoose.plugin(mongooseIntl, {
+  languages: ['en', 'ar'],
+  defaultLanguage: 'en',
+})
 app.use('/api/products', productRoutes)
 app.use('/api/promocodes', promocodeRoute)
 app.use('/api/upload', uploadRoutes)

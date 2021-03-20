@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Card, Container, Col } from 'react-bootstrap'
-
+import { useTranslation } from 'react-i18next'
 const Product = ({ product }) => {
+  const { t, i18n } = useTranslation()
+
   return (
     <Card
       className='my-3 py-3 rounded mr-auto align-items-center justify-content-center'
@@ -21,7 +23,7 @@ const Product = ({ product }) => {
       <Card.Body>
         <Link to={`/product/${product._id}`}>
           <Card.Title as='h6' className='text-center'>
-            <strong>{product.name}</strong>
+            <strong>{product.name[i18n.language]}</strong>
           </Card.Title>
         </Link>
         <Container className=' align-items-center justify-content-center'>

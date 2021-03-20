@@ -11,19 +11,24 @@ import {
   Col,
   Nav,
   NavDropdown,
+  DropdownButton,
   Dropdown,
   Row,
   NavLink,
+  Button,
 } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 
 const Header2 = ({ history }) => {
+  const { t, i18n } = useTranslation()
+  const [language, setLanguage] = useState('ar')
   const dispatch = useDispatch()
   const [keyword, setKeyword] = useState('')
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   const cart = useSelector((state) => state.cart)
-  const { cartItems } = cart
+  const { cartItems, lang } = cart
 
   const numItems = cartItems.length
 
@@ -31,6 +36,17 @@ const Header2 = ({ history }) => {
     dispatch(logout())
     window.location.replace('/')
   }
+
+  const handleOnclick = (e) => {
+    e.preventDefault()
+    if (language === 'ar') {
+      setLanguage('en')
+    } else {
+      setLanguage('ar')
+    }
+    i18n.changeLanguage(e.target.value)
+  }
+
   return (
     <header>
       <Row className='justify-content-center align-items-center'>
@@ -40,11 +56,19 @@ const Header2 = ({ history }) => {
             style={{ backgroundColor: 'black', marginLeft: '0px' }}
           >
             <Col
-              md={2}
-              sm={3}
-              xs={2}
-              //  style={{ margin: '0px', backgroundColor: 'red' }}
+              md={1}
+              sm={1}
+              xs={1}
+              className={
+                i18n.language === 'ar'
+                  ? 'd-block d-md-none d-lg-none '
+                  : 'd-none'
+              }
+              style={{ marginBottom: '40px' }}
             >
+              <Sidebar />
+            </Col>
+            <Col md={2} sm={3} xs={2}>
               <Navbar.Brand
                 href='/'
                 style={{
@@ -60,7 +84,6 @@ const Header2 = ({ history }) => {
                   className='imge'
                   src={logo}
                   //className='imge'
-                  //   style={{ width: '100px', height: '80px' }}
                 />
               </Navbar.Brand>
             </Col>
@@ -83,7 +106,10 @@ const Header2 = ({ history }) => {
               xs={{ span: 3 }}
               // style={{ backgroundColor: 'red' }}
             >
-              <Nav className='flex-row justify-content-end'>
+              <Nav
+                className='flex-row justify-content-end'
+                //   dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
+              >
                 <Nav.Item>
                   <Nav.Link href='/cart'>
                     <i
@@ -94,9 +120,27 @@ const Header2 = ({ history }) => {
                     </i>
                   </Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                  <Button
+                    value={language}
+                    onClick={handleOnclick}
+                    style={{
+                      color: '#ed9003',
+                      backgroundColor: 'black',
+                      borderColor: 'black',
+                      margin: '5px',
+                    }}
+                  >
+                    {i18n.language === 'ar' ? 'EN' : 'AR'}
+                  </Button>
+                </Nav.Item>
                 <Nav.Item
-                  className='d-block d-md-none d-lg-none '
-                  style={{ marginLeft: '1.5rem' }}
+                  className={
+                    i18n.language === 'en'
+                      ? 'd-block d-md-none d-lg-none '
+                      : 'd-none'
+                  }
+                  style={{ margin: '10px' }}
                 >
                   <Sidebar />
                 </Nav.Item>

@@ -18,11 +18,13 @@ import {
   updateUserProfile,
   login,
 } from '../actions/userActions'
+import { useTranslation } from 'react-i18next'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 import { listMyOrders } from '../actions/orderActions'
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('')
+  const { t, i18n } = useTranslation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -31,9 +33,6 @@ const ProfileScreen = ({ location, history }) => {
 
   const handleClose = () => setShow(false)
   const handleShow = (e) => {
-    // setID(e._id)
-    //  setName(e.name)
-    // setLogo(e.logo)
     setShow(true)
   }
 
@@ -81,7 +80,7 @@ const ProfileScreen = ({ location, history }) => {
     <Container style={{ marginTop: '2rem' }}>
       <Row>
         <Col md={3} className='text-center'>
-          <h2>User Profile</h2>
+          <h2>{t('profile')}</h2>
           {message && <Message variant='danger'>{message}</Message>}
           {error && <Message variant='danger'>{error}</Message>}
           {success && <Message variant='success'>Profile Updated</Message>}
@@ -91,13 +90,15 @@ const ProfileScreen = ({ location, history }) => {
               <i className='far fa-user-circle fa-5x' id='adminmenu'></i>
             </p>
 
-            <p>Name : {userInfo.name}</p>
-            <p>Email : {userInfo.email}</p>
+            <p>{t('name', { val: userInfo.name })} </p>
+            <p>
+              {t('email')} {userInfo.email}
+            </p>
           </Container>
         </Col>
 
         <Col md={9}>
-          <h2 className='text-center'>Orders</h2>
+          <h2 className='text-center'>{t('orders')}</h2>
           {loadingOrders ? (
             <Loader />
           ) : errorOrders ? (
@@ -107,10 +108,10 @@ const ProfileScreen = ({ location, history }) => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>DATE</th>
-                  <th>TOTAL</th>
-                  <th>PAID</th>
-                  <th>DELIVERD</th>
+                  <th>{t('date')}</th>
+                  <th>{t('TOTAL')}</th>
+                  <th>{t('paid')}</th>
+                  <th>{t('deliverd')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -141,7 +142,7 @@ const ProfileScreen = ({ location, history }) => {
                     </td>
                     <td>
                       <LinkContainer to={`/order/${order._id}`}>
-                        <Button variant='light'>Details</Button>
+                        <Button variant='light'>{t('details')}</Button>
                       </LinkContainer>
                     </td>
                   </tr>

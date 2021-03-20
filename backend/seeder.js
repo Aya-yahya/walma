@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import mongooseIntl from 'mongoose-intl'
 import colors from 'colors'
 import users from './data/users.js'
 import products from './data/products.js'
@@ -11,6 +12,10 @@ import connectDB from './config/db.js'
 dotenv.config()
 
 connectDB()
+mongoose.plugin(mongooseIntl, {
+  languages: ['en', 'ar'],
+  defaultLanguage: 'en',
+})
 
 const importData = async () => {
   try {

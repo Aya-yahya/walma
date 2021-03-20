@@ -6,11 +6,12 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { login } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
+import { useTranslation } from 'react-i18next'
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
+  const { t, i18n } = useTranslation()
   const dispatch = useDispatch()
   const userLogin = useSelector((state) => state.userLogin)
   const { loading, error, userInfo } = userLogin
@@ -32,7 +33,7 @@ const LoginScreen = ({ location, history }) => {
       <FormContainer>
         <h1 className='H1 text-center'>
           <Badge style={{ backgroundColor: '#ed9003', color: 'black' }}>
-            Login
+            {t('login')}
           </Badge>
         </h1>
         {error && <Message variant='danger'>{error}</Message>}
@@ -40,7 +41,7 @@ const LoginScreen = ({ location, history }) => {
         <Form onSubmit={submitHandler}>
           <Form.Group as={Row} controlId='email' className='margins'>
             <Form.Label className='text-muted' column sm='3'>
-              <strong> Email </strong>
+              <strong> {t('email')} </strong>
             </Form.Label>
             <Col sm='8'>
               <Form.Control
@@ -55,7 +56,7 @@ const LoginScreen = ({ location, history }) => {
 
           <Form.Group as={Row} controlId='password'>
             <Form.Label className='text-muted' column sm='3'>
-              <strong>Password</strong>
+              <strong>{t('password')}</strong>
             </Form.Label>
             <Col sm='8'>
               <Form.Control
@@ -76,14 +77,15 @@ const LoginScreen = ({ location, history }) => {
                 marginTop: '30px',
               }}
             >
-              Login
+              {t('login')}
             </Button>
           </Container>
         </Form>
 
         <Row className='py-3'>
           <Col className='text-center'>
-            New customer?{'  '}
+            {t('new')}
+            {'  '}
             <Link
               to={redirect ? `/register?redirect=${redirect}` : '/register'}
             >
@@ -91,7 +93,7 @@ const LoginScreen = ({ location, history }) => {
                 className='badge badge-pill '
                 style={{ backgroundColor: 'black', color: '#ed9003' }}
               >
-                Register
+                {t('register')}
               </span>
             </Link>
           </Col>

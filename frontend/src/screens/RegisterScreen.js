@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { register } from '../actions/userActions'
+import { useTranslation } from 'react-i18next'
 import FormContainer from '../components/FormContainer'
 
 const RegisterScreen = ({ location, history }) => {
   const [name, setName] = useState('')
+  const { t, i18n } = useTranslation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -39,7 +41,7 @@ const RegisterScreen = ({ location, history }) => {
       <FormContainer>
         <h1 className='H1 text-center'>
           <Badge style={{ backgroundColor: '#ed9003', color: 'black' }}>
-            Sign Up
+            {t('register')}
           </Badge>
         </h1>
 
@@ -49,7 +51,7 @@ const RegisterScreen = ({ location, history }) => {
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='name' as={Row} className='margins'>
             <Form.Label className='text-muted' column sm='3'>
-              <strong> Name </strong>
+              <strong> {t('name')} </strong>
             </Form.Label>
             <Col sm='8'>
               <Form.Control
@@ -64,7 +66,7 @@ const RegisterScreen = ({ location, history }) => {
 
           <Form.Group controlId='email' as={Row} className='margins'>
             <Form.Label className='text-muted' column sm='3'>
-              <strong> Email Address </strong>
+              <strong>{t('email')} </strong>
             </Form.Label>
 
             <Col sm='8'>
@@ -80,7 +82,7 @@ const RegisterScreen = ({ location, history }) => {
 
           <Form.Group controlId='password' as={Row} className='margins'>
             <Form.Label className='text-muted' column sm='3'>
-              <strong> Password </strong>
+              <strong> {t('password')} </strong>
             </Form.Label>
 
             <Col sm='8'>
@@ -96,7 +98,7 @@ const RegisterScreen = ({ location, history }) => {
 
           <Form.Group controlId='confirmPassword' as={Row} className='margins'>
             <Form.Label className='text-muted' column sm='3'>
-              <strong> Confirm Paasword </strong>
+              <strong> {t('confirm')} </strong>
             </Form.Label>
 
             <Col sm='8'>
@@ -119,20 +121,21 @@ const RegisterScreen = ({ location, history }) => {
                 marginTop: '30px',
               }}
             >
-              Register
+              {t('register')}
             </Button>
           </Container>
         </Form>
 
         <Row className='py-3 text-center'>
           <Col>
-            Have an Account?{'  '}
+            {t('haveAccount')}
+            {'  '}
             <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
               <span
                 className='badge badge-pill '
                 style={{ backgroundColor: 'black', color: '#ed9003' }}
               >
-                login
+                {t('login')}
               </span>
             </Link>
           </Col>

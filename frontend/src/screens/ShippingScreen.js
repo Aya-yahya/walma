@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
-
+import { useTranslation } from 'react-i18next'
 import { saveShippingAddress } from '../actions/cartActions'
 import { savePaymentMethod } from '../actions/cartActions'
 import { createOrder } from '../actions/orderActions'
@@ -10,7 +10,7 @@ import { createOrder } from '../actions/orderActions'
 const ShippingScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart)
   const { shippingAddress } = cart
-
+  const { t, i18n } = useTranslation()
   const [address, setAddress] = useState(shippingAddress.address)
   const [paymentMethod, setPaymentMethod] = useState('PayPal')
   const [city, setCity] = useState(shippingAddress.city)
@@ -66,10 +66,10 @@ const ShippingScreen = ({ history }) => {
                 style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
                 className='text-center '
               >
-                Shipping Address
+                {t('shipping')}
               </h4>
               <Form.Group controlId='address'>
-                <Form.Label>Address</Form.Label>
+                <Form.Label>{t('address')}</Form.Label>
                 <Form.Control
                   type='text'
                   placeholder='Enter Address'
@@ -79,7 +79,7 @@ const ShippingScreen = ({ history }) => {
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId='city'>
-                <Form.Label>City</Form.Label>
+                <Form.Label>{t('city')}</Form.Label>
                 <Form.Control
                   type='text'
                   placeholder='Enter City'
@@ -89,7 +89,7 @@ const ShippingScreen = ({ history }) => {
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId='phoneNumber'>
-                <Form.Label>Phone Number</Form.Label>
+                <Form.Label>{t('phone')}</Form.Label>
                 <Form.Control
                   type='text'
                   placeholder='Enter Phone Number'
@@ -99,7 +99,7 @@ const ShippingScreen = ({ history }) => {
                 ></Form.Control>
               </Form.Group>
               <Form.Group controlId='country'>
-                <Form.Label>Country</Form.Label>
+                <Form.Label>{t('country')}</Form.Label>
                 <Form.Control
                   type='text'
                   placeholder='Enter Country'
@@ -114,7 +114,7 @@ const ShippingScreen = ({ history }) => {
                 style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
                 className='text-center '
               >
-                Payment Method
+                {t('payment')}
               </h4>
               <Form.Group>
                 <Col className='center'>
@@ -145,7 +145,7 @@ const ShippingScreen = ({ history }) => {
               type='submit'
               style={{ backgroundColor: 'black', color: '#ed9003' }}
             >
-              Continue
+              {t('continue')}
             </Button>
           </Row>
         </Form>

@@ -6,18 +6,19 @@ import { Form, Row, Col, Button, Container } from 'react-bootstrap'
 //import Loader from '../components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import FormContainer from '../components/FormContainer'
-
+import { useTranslation } from 'react-i18next'
 import { createProduct } from '../actions/productActions'
 
 const ProductCreateScreen = ({ match, history }) => {
   const dispatch = useDispatch()
-
-  const [name, setName] = useState('')
+  const { t, i18n } = useTranslation()
+  const [arabicName, setArabicName] = useState('')
+  const [englishName, setEnglishName] = useState('')
   const [price, setPrice] = useState(0)
   const [image, setImage] = useState('')
   const [countInStock, setCountInStock] = useState(0)
-  const [description, setDescription] = useState('')
-
+  const [descriptionAR, setDescriptionAR] = useState('')
+  const [descriptionEN, setDescriptionEN] = useState('')
   const [uploading, setUploading] = useState(false) //this is just like any other loading state we use. we set true when making our request and set it back to false when request is done
 
   const productCreate = useSelector((state) => state.productCreate)
@@ -39,12 +40,13 @@ const ProductCreateScreen = ({ match, history }) => {
 
     dispatch(
       createProduct({
-        name,
+        arabicName,
+        englishName,
         price,
         image,
 
-        description,
-
+        descriptionAR,
+        descriptionEN,
         countInStock,
       })
     )
@@ -76,27 +78,39 @@ const ProductCreateScreen = ({ match, history }) => {
         Go back
       </Link>
       <FormContainer>
-        <h1 className='text-center'>Create product</h1>
+        <h1 className='text-center'>{t('createProduct')}</h1>
         <Form onSubmit={submitHandler}>
           <Form.Row className='margins'>
             <Col md={2}>
               <Form.Label column>
-                <strong>Name</strong>
+                <strong>{t('name')}</strong>
               </Form.Label>
             </Col>
-            <Col md={4}>
+            <Col md={5}>
               <Form.Control
                 type='name'
-                placeholder='Enter name'
-                value={name}
+                placeholder={t('enterenname')}
+                value={englishName}
                 onChange={(e) => {
-                  setName(e.target.value)
+                  setEnglishName(e.target.value)
                 }}
               ></Form.Control>
             </Col>
+            <Col md={5}>
+              <Form.Control
+                type='name'
+                placeholder={t('enterarname')}
+                value={arabicName}
+                onChange={(e) => {
+                  setArabicName(e.target.value)
+                }}
+              ></Form.Control>
+            </Col>
+          </Form.Row>
+          <Form.Row>
             <Col md={2}>
               <Form.Label column>
-                <strong>Price</strong>
+                <strong>{t('price')}</strong>
               </Form.Label>
             </Col>
             <Col md={4}>
@@ -107,11 +121,24 @@ const ProductCreateScreen = ({ match, history }) => {
                 onChange={(e) => setPrice(e.target.value)}
               ></Form.Control>
             </Col>
+            <Col md={2}>
+              <Form.Label>
+                <strong>{t('countinstock')}</strong>
+              </Form.Label>
+            </Col>
+            <Col md={3}>
+              <Form.Control
+                type='number'
+                placeholder='Enter count in stock'
+                value={countInStock}
+                onChange={(e) => setCountInStock(e.target.value)}
+              ></Form.Control>
+            </Col>
           </Form.Row>
           <Form.Row className='margins'>
             <Col md={2}>
               <Form.Label column>
-                <strong>Image</strong>
+                <strong>{t('image')}</strong>
               </Form.Label>
             </Col>
             <Col>
@@ -135,28 +162,23 @@ const ProductCreateScreen = ({ match, history }) => {
           <Form.Row className='margins'>
             <Col md={2}>
               <Form.Label>
-                <strong>Description</strong>
+                <strong>{t('descrip')}</strong>
               </Form.Label>
             </Col>
             <Col md={5}>
               <Form.Control
                 type='text'
-                placeholder='Enter description'
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                placeholder={t('descripEN')}
+                value={descriptionEN}
+                onChange={(e) => setDescriptionEN(e.target.value)}
               ></Form.Control>
             </Col>
-            <Col md={2}>
-              <Form.Label>
-                <strong>Count in stock</strong>
-              </Form.Label>
-            </Col>
-            <Col md={3}>
+            <Col md={5}>
               <Form.Control
-                type='number'
-                placeholder='Enter count in stock'
-                value={countInStock}
-                onChange={(e) => setCountInStock(e.target.value)}
+                type='text'
+                placeholder={t('descripAR')}
+                value={descriptionAR}
+                onChange={(e) => setDescriptionAR(e.target.value)}
               ></Form.Control>
             </Col>
           </Form.Row>
@@ -170,7 +192,7 @@ const ProductCreateScreen = ({ match, history }) => {
                 marginTop: '30px',
               }}
             >
-              Create
+              {t('create')}
             </Button>
           </Container>
         </Form>

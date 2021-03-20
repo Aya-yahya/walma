@@ -45,12 +45,12 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
-    name: 'sample name',
+    name: { en: 'sample name', ar: 'sample name' },
     price: 0,
     user: req.user._id,
     image: '/images/sample.jpg',
     countInStock: 0,
-    description: 'sample description',
+    description: { en: 'sample description', ar: 'sample description' },
   })
 
   const createdProduct = await product.save()
@@ -59,10 +59,13 @@ const createProduct = asyncHandler(async (req, res) => {
 
 const updateProduct = asyncHandler(async (req, res) => {
   const {
-    name,
+    arabicName,
+    englishName,
     price,
     description,
     image,
+    descriptionAR,
+    descriptionEN,
 
     countInStock,
   } = req.body
@@ -70,9 +73,9 @@ const updateProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
 
   if (product) {
-    product.name = name
+    product.name = { en: englishName, ar: arabicName }
     product.price = price
-    product.description = description
+    product.description = { en: descriptionEN, ar: descriptionAR }
     product.image = image
 
     product.countInStock = countInStock

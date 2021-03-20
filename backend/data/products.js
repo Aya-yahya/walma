@@ -1,41 +1,41 @@
 const products = [
   {
-    name: 'Walma Coffee',
+    name: { en: 'Walma Coffee', ar: 'قهوة والمة' },
     image: '/images/walmacoffe.jpeg',
 
-    description: 'Arabian Coffee',
+    description: { en: 'Arabian Coffee', ar: 'قهوة عربيه' },
     price: 7,
     countInStock: 10,
   },
   {
-    name: 'Walma Coffee',
+    name: { en: 'Walma Coffee', ar: 'قهوة والمة' },
     image: '/images/walmacoffe.jpeg',
 
-    description: 'Arabian Coffee',
+    description: { en: 'Arabian Coffee', ar: 'قهوة عربيه' },
     price: 7,
     countInStock: 10,
   },
   {
-    name: 'Walma Coffee',
+    name: { en: 'Walma Coffee', ar: 'قهوة والمة' },
     image: '/images/walmacoffe.jpeg',
 
-    description: 'Arabian Coffee',
+    description: { en: 'Arabian Coffee', ar: 'قهوة عربيه' },
     price: 7,
     countInStock: 10,
   },
   {
-    name: 'Walma Coffee',
+    name: { en: 'Walma Coffee', ar: 'قهوة والمة' },
     image: '/images/walmacoffe.jpeg',
 
-    description: 'Arabian Coffee',
+    description: { en: 'Arabian Coffee', ar: 'قهوة عربيه' },
     price: 7,
     countInStock: 10,
   },
   {
-    name: 'Walma Coffee',
+    name: { en: 'Walma Coffee', ar: 'قهوة والمة' },
     image: '/images/walmacoffe.jpeg',
 
-    description: 'Arabian Coffee',
+    description: { en: 'Arabian Coffee', ar: 'قهوة عربيه' },
     price: 7,
     countInStock: 10,
   },

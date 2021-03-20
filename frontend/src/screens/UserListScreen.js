@@ -5,12 +5,13 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
 import { listUsers, deleteUser } from '../actions/userActions'
+import { useTranslation } from 'react-i18next'
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch()
   const userList = useSelector((state) => state.userList)
   const { loading, error, users } = userList
-
+  const { t, i18n } = useTranslation()
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin // MIGHT BE A PROBLEM WITH THE WAY WE HAVE THE USER REDUCER LABELED
 
@@ -33,7 +34,7 @@ const UserListScreen = ({ history }) => {
 
   return (
     <Container style={{ marginTop: '2rem' }}>
-      <h1 className='text-center'>Users</h1>
+      <h1 className='text-center'>{t('users')}</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -43,9 +44,9 @@ const UserListScreen = ({ history }) => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Admin</th>
+              <th>{t('name')}</th>
+              <th>{t('email')}</th>
+              <th>{t('admin')}</th>
             </tr>
           </thead>
           <tbody>

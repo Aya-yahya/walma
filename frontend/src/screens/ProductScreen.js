@@ -18,13 +18,12 @@ import { AddProductToWishlist } from '../actions/userActions'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
-
+import { useTranslation } from 'react-i18next'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
 const ProductScreen = ({ history, match }) => {
-  const [active, setActive] = useState(false)
+  const { t, i18n } = useTranslation()
   const [qty, setQty] = useState(1)
-
   const dispatch = useDispatch()
 
   const productDetails = useSelector((state) => state.productDetails)
@@ -32,22 +31,13 @@ const ProductScreen = ({ history, match }) => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
+
   useEffect(() => {
     dispatch(listProductDetails(match.params.id)) // match.params.id takes the id part of the current url and we pass it in here as an argument to get that specific product
   }, [dispatch, match])
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`)
-  }
-
-  const addToWishlist = (e) => {
-    e.preventDefault()
-    if (!userInfo) {
-      history.push(`/login`)
-    } else {
-      dispatch(AddProductToWishlist(match.params.id))
-      alert('product added to your wishlist ')
-    }
   }
 
   return (
@@ -64,12 +54,7 @@ const ProductScreen = ({ history, match }) => {
           <>
             <Row>
               <Col md={6}>
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fluid
-                  //style={{ width: 300, height: 300 }}
-                />
+                <Image src={product.image} alt={product.name} fluid />
               </Col>
               <Col md={6}>
                 <ListGroup variant='flush' className='text-center'>
@@ -79,7 +64,7 @@ const ProductScreen = ({ history, match }) => {
                         className='badge '
                         style={{ backgroundColor: '#ed9003' }}
                       >
-                        In Stock
+                        {t('instock')}
                       </span>
                     </Container>
                   ) : (
@@ -88,14 +73,21 @@ const ProductScreen = ({ history, match }) => {
                         className='badge '
                         style={{ backgroundColor: '#ed9003' }}
                       >
-                        Out Of Stock
+                        {t('outstock')}
                       </span>
                     </Container>
                   )}
                 </ListGroup>
                 <ListGroup variant='flush' className='text-center'>
                   <ListGroup.Item className='noborder'>
-                    <h3>{product.name} </h3>
+                    <h3>
+                      {' '}
+                      {product.name ? (
+                        <>{product.name[i18n.language]}</>
+                      ) : (
+                        <></>
+                      )}
+                    </h3>
                   </ListGroup.Item>
 
                   <ListGroup.Item className='noborder'>
@@ -124,7 +116,7 @@ const ProductScreen = ({ history, match }) => {
                           type='button'
                           disabled={product.countInStock === 0}
                         >
-                          Add To Cart
+                          {t('cartadd')}
                         </Button>
                       </Col>
                     </Row>
@@ -136,12 +128,22 @@ const ProductScreen = ({ history, match }) => {
                         // md={6}
                         className=' align-items-center justify-content-center'
                       >
-                        <h4>Price : {product.price} KD</h4>
+                        <h4>{t('price', { val: product.price })}</h4>
                       </Col>
                     </Row>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    <h5>Description : {product.description}</h5>
+                    <h5>
+                      {product.description ? (
+                        <>
+                          {t('description', {
+                            val: product.description[i18n.language],
+                          })}
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </h5>
                   </ListGroup.Item>
                 </ListGroup>
               </Col>

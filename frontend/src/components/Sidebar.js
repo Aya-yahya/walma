@@ -2,8 +2,9 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { push as Menu } from 'react-burger-menu'
-
+import { useTranslation } from 'react-i18next'
 export default () => {
+  const { t, i18n } = useTranslation()
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
   return (

@@ -114,6 +114,9 @@ h3 {
 .carousel a {
   margin: 0 auto;
 }
+.material-icons-outlined {
+  font-size: 30px;
+}
 @media (max-width: 400px) {
   h6 {
     font-size: 15px;

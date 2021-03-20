@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
+import head from '../coffee.jpg'
+import { Image } from 'react-bootstrap'
 import { push as Menu } from 'react-burger-menu'
 import { useTranslation } from 'react-i18next'
 export default () => {
@@ -9,21 +10,24 @@ export default () => {
   const { userInfo } = userLogin
   return (
     <Menu right>
+      <Image src={head} style={{ width: '250px' }} />
       <a className='menu-item' href='/'>
         Home
       </a>
       {userInfo && userInfo.isAdmin && (
-        <>
-          <a className='menu-item' href='/admin/userlist'>
-            users list
-          </a>
-          <a className='menu-item' href='/admin/productlist'>
-            Products list
-          </a>
-          <a className='menu-item' href='/admin/orderlist'>
-            orders list
-          </a>
-        </>
+        <a className='menu-item' href='/admin/userlist'>
+          users list
+        </a>
+      )}
+      {userInfo && userInfo.isAdmin && (
+        <a className='menu-item' href='/admin/productlist'>
+          Products list
+        </a>
+      )}
+      {userInfo && userInfo.isAdmin && (
+        <a className='menu-item' href='/admin/orderlist'>
+          orders list
+        </a>
       )}
       {userInfo ? (
         <a className='menu-item' href='/profile'>

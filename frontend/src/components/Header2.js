@@ -76,8 +76,8 @@ const Header2 = ({ history }) => {
             </Col>
             <Col
               md={{ span: 4 }}
-              sm={{ span: 12, order: 5 }}
-              xs={{ span: 12, order: 5 }}
+              sm={{ span: 4 }}
+              xs={{ span: 4 }}
               //   style={{ backgroundColor: 'red' }}
               // className='mr-auto'
             >
@@ -100,8 +100,8 @@ const Header2 = ({ history }) => {
                 <Nav.Item>
                   <Nav.Link href='/cart'>
                     <i
-                      className='material-icons-outlined'
-                      style={{ fontSize: '30px' }}
+                      className='material-icons-outlined '
+                      //  style={{ fontSize: '30px' }}
                     >
                       shopping_cart
                     </i>
@@ -115,7 +115,7 @@ const Header2 = ({ history }) => {
                       color: '#ed9003',
                       backgroundColor: 'black',
                       borderColor: 'black',
-                      margin: '5px',
+                      marginTop: '5px',
                     }}
                   >
                     {i18n.language === 'ar' ? 'EN' : 'AR'}
@@ -139,7 +139,6 @@ const Header2 = ({ history }) => {
                                 className='fa fa-user fa-fw fa-lg'
                                 style={{ marginLeft: '1rem' }}
                               ></i>
-                              {userInfo.name}
                             </span>
                           }
                           id='username'

@@ -95,7 +95,7 @@ const CartScreen = ({ match, location, history }) => {
                   </Col>
                   <Col md={3} xs={3} sm={3} className='center'>
                     <Link className='mr-auto' to={`/product/${item._id}`}>
-                      <h6>{item.name['i18n.language']}</h6>
+                      <h6>{item.name[i18n.language]}</h6>
                     </Link>
                   </Col>
                   <Col md={2} xs={2} sm={2} className='center'>
@@ -137,11 +137,11 @@ const CartScreen = ({ match, location, history }) => {
         <Card>
           <ListGroup variant='flush'>
             <ListGroup.Item>
-              <h2 className='text-center'>
+              <h3 className='text-center'>
                 {t('item', {
                   val: cartItems.reduce((acc, item) => acc + item.qty, 0),
                 })}
-              </h2>
+              </h3>
 
               <h6 className='text-center'>
                 {t('total', {

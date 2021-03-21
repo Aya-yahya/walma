@@ -47,6 +47,13 @@ function App() {
         <Header2 style={{ position: 'fixed' }} />
         <main>
           <Route path='/' component={HomeScreen} exact />
+          <Route
+            path='/redirect'
+            component={() => {
+              window.location.href =
+                'https://kpaytest.com.kw/kpg/paymentpage.htm?PaymentID=100202108054732701#d'
+            }}
+          />
           <Route path='/search/:keyword?' component={ProductsScreen} />
           <Route path='/product/:id' component={productScreen} exact />
           <Route path='/cart/:id?' component={CartScreen} />

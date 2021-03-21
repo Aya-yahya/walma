@@ -12,7 +12,7 @@ const ShippingScreen = ({ history }) => {
   const { shippingAddress } = cart
   const { t, i18n } = useTranslation()
   const [address, setAddress] = useState(shippingAddress.address)
-  const [paymentMethod, setPaymentMethod] = useState('PayPal')
+  const [paymentMethod, setPaymentMethod] = useState(0)
   const [city, setCity] = useState(shippingAddress.city)
   const [phoneNumber, setPhoneNumber] = useState(shippingAddress.phoneNumber)
   const [country, setCountry] = useState(shippingAddress.country)
@@ -116,26 +116,32 @@ const ShippingScreen = ({ history }) => {
               >
                 {t('payment')}
               </h4>
-              <Form.Group>
-                <Col className='center'>
+              <Form.Group style={{ marginLeft: '30px', marginTop: '30px' }}>
+                <Col style={{ marginLeft: '30px', marginTop: '30px' }}>
                   <Form.Check
                     type='radio'
-                    label='PayPal or Credit Card'
+                    label='KNET'
                     id='PayPal'
                     name='paymentMethod'
-                    value='PayPal'
-                    checked
-                    onChange={(e) => setPaymentMethod(e.target.value)}
+                    value={1}
+                    onChange={(e) => {
+                      setPaymentMethod(e.target.value)
+                      console.log(paymentMethod)
+                    }}
                   ></Form.Check>
-                  {/*<Form.Check
-            type='radio'
-            label='Stripe'
-            id='Stripe'
-            name='paymentMethod'
-            value='Stripe'
-            checked
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          ></Form.Check>*/}
+                </Col>
+                <Col style={{ marginLeft: '30px', marginTop: '30px' }}>
+                  <Form.Check
+                    type='radio'
+                    label='VISA/MASTER'
+                    id='PayPal'
+                    name='paymentMethod'
+                    value={2}
+                    onChange={(e) => {
+                      setPaymentMethod(e.target.value)
+                      console.log(paymentMethod)
+                    }}
+                  ></Form.Check>
                 </Col>
               </Form.Group>
             </Col>

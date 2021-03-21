@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { useTranslation } from 'react-i18next'
-import axios from 'axios'
+
 import {
   Button,
   Row,
@@ -36,7 +37,7 @@ const OrderScreen = ({ match, history }) => {
   const { order, loading, error } = orderDetails
 
   const orderPay = useSelector((state) => state.orderPay)
-  const { loading: loadingPay, success: successPay } = orderPay
+  const { loading: loadingPay, success: successPay, paymentResult } = orderPay
 
   const orderDeliver = useSelector((state) => state.orderDeliver)
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver
@@ -46,33 +47,29 @@ const OrderScreen = ({ match, history }) => {
 
   useEffect(() => {
     // we use javascript to dynamically add a script like the one here https://developer.paypal.com/docs/checkout/reference/customize-sdk/
-    const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get('/api/config/paypal')
-      const script = document.createElement('script')
-      script.type = 'text/javascript'
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
-      script.async = true
-      script.onload = () => {
-        setSdkReady(true)
-      }
-      document.body.appendChild(script)
+    if (successPay) {
+      // console.log('aaa')
+      //  window.location.replace(paymentResult.Data.PaymentURL)
+      window.location.href = paymentResult.Data.PaymentURL
+      // history.push('/redirect')
     }
-
     if (!order || successPay || order._id !== orderId || successDeliver) {
       //reset the order page to not have the effect loop infinitely
       dispatch({ type: ORDER_PAY_RESET })
       dispatch({ type: ORDER_DELIVER_RESET })
       // lets us see order details before order comes in and after we pay
       dispatch(getOrderDetails(orderId))
-    } else if (!order.isPaid) {
-      // load paypal script if order is not paid
-      if (!window.paypal) {
-        addPayPalScript()
-      }
-    } else {
-      setSdkReady(true)
     }
-  }, [dispatch, orderId, successPay, order, successDeliver, history, userInfo])
+  }, [
+    dispatch,
+    orderId,
+    successPay,
+    order,
+    successDeliver,
+    history,
+    userInfo,
+    paymentResult,
+  ])
 
   /*
   useEffect(() => {
@@ -103,6 +100,10 @@ const OrderScreen = ({ match, history }) => {
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)
     dispatch(payOrder(orderId, paymentResult))
+  }
+
+  const payHandler = async () => {
+    dispatch(payOrder())
   }
 
   const deliverHandler = () => {
@@ -263,15 +264,7 @@ const OrderScreen = ({ match, history }) => {
               </ListGroup.Item>
               {!order.isPaid && (
                 <ListGroup.Item>
-                  {loadingPay && <Loader />}
-                  {!sdkReady ? (
-                    <Loader />
-                  ) : (
-                    <PayPalButton
-                      amount={order.totalPrice}
-                      onSuccess={successPaymentHandler}
-                    />
-                  )}
+                  <Button onClick={payHandler}>pay</Button>
                 </ListGroup.Item>
               )}
 

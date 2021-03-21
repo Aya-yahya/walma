@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler'
 import User from '../models/userModel.js'
+import axios from 'axios'
 import Product from '../models/productModel.js'
 import generateToken from '../utils/generateToken.js'
 

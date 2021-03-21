@@ -80,7 +80,8 @@ const getMyOrders = asyncHandler(async (req, res) => {
 })
 
 const payMyOrders = asyncHandler(async (req, res) => {
-  console.log('hiii')
+  console.log('hiii', req.body.totalPrice)
+  const total = 10
   var dat = JSON.stringify({
     PaymentMethodId: 1,
     CustomerName: 'test',
@@ -88,7 +89,7 @@ const payMyOrders = asyncHandler(async (req, res) => {
     MobileCountryCode: '965',
     CustomerMobile: '12345678',
     CustomerEmail: 'mail@mail.com',
-    InvoiceValue: 100,
+    InvoiceValue: req.body.totalPrice,
     CallBackUrl: 'https://walmaapp.herokuapp.com/success',
     ErrorUrl: 'https://walmaapp.herokuapp.com/error',
     Language: 'en',
@@ -102,12 +103,18 @@ const payMyOrders = asyncHandler(async (req, res) => {
       Address: 'Address',
       AddressInstructions: 'Address',
     },
-    Suppliers: [{ SupplierCode: 1, ProposedShare: null, InvoiceShare: 100 }],
+    Suppliers: [
+      {
+        SupplierCode: 1,
+        ProposedShare: null,
+        InvoiceShare: req.body.totalPrice,
+      },
+    ],
     InvoiceItems: [
       {
         ItemName: 'name',
         Quantity: '1',
-        UnitPrice: 100,
+        UnitPrice: req.body.totalPrice,
         Description: 'string',
         Weight: 0.5,
         Width: 10,

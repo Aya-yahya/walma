@@ -66,17 +66,13 @@ export const getOrderDetails = (id) => async (dispatch) => {
   }
 }
 
-export const payOrder = (orderId, paymentResult) => async (
-  dispatch,
-  getState
-) => {
+export const payOrder = (totalPrice) => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_PAY_REQUEST,
     })
- 
-    const {data}  = await axios.post(`/api/orders/payid`)
-   
+
+    const { data } = await axios.post(`/api/orders/payid`, totalPrice, {})
 
     console.log(data)
     dispatch({ type: ORDER_PAY_SUCCESS, payload: data })

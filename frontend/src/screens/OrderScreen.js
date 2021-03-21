@@ -103,7 +103,7 @@ const OrderScreen = ({ match, history }) => {
   }
 
   const payHandler = async () => {
-    dispatch(payOrder())
+    dispatch(payOrder(order))
   }
 
   const deliverHandler = () => {
@@ -263,8 +263,14 @@ const OrderScreen = ({ match, history }) => {
                 </Row>
               </ListGroup.Item>
               {!order.isPaid && (
-                <ListGroup.Item>
-                  <Button onClick={payHandler}>pay</Button>
+                <ListGroup.Item className='center'>
+                  <Button
+                    onClick={payHandler}
+                    style={{ backgroundColor: 'black', color: '#ed9003' }}
+                    className='center'
+                  >
+                    pay
+                  </Button>
                 </ListGroup.Item>
               )}
 

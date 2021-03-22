@@ -13,9 +13,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     totalPrice,
   } = req.body.order
 
-  console.log(paymentMethod)
   if (orderItems && orderItems.length === 0) {
-    console.log(paymentMethod)
     res.status(400)
     throw new Error('No order items')
     return
@@ -80,8 +78,7 @@ const getMyOrders = asyncHandler(async (req, res) => {
 })
 
 const payMyOrders = asyncHandler(async (req, res) => {
-  console.log('hiii', req.body.totalPrice)
-  const total = 10
+  console.log(req)
   var dat = JSON.stringify({
     PaymentMethodId: 1,
     CustomerName: 'test',
@@ -90,8 +87,8 @@ const payMyOrders = asyncHandler(async (req, res) => {
     CustomerMobile: '12345678',
     CustomerEmail: 'mail@mail.com',
     InvoiceValue: req.body.totalPrice,
-    CallBackUrl: 'https://walmaapp.herokuapp.com/success',
-    ErrorUrl: 'https://walmaapp.herokuapp.com/error',
+    CallBackUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/success`,
+    ErrorUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/error`,
     Language: 'en',
     CustomerReference: 'string',
     CustomerCivilId: 'string',
@@ -138,7 +135,7 @@ const payMyOrders = asyncHandler(async (req, res) => {
     dat,
     config
   )
-  console.log(data.Data.PaymentURL)
+
   res.json(data)
 })
 

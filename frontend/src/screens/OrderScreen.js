@@ -48,10 +48,7 @@ const OrderScreen = ({ match, history }) => {
   useEffect(() => {
     // we use javascript to dynamically add a script like the one here https://developer.paypal.com/docs/checkout/reference/customize-sdk/
     if (successPay) {
-      // console.log('aaa')
-      //  window.location.replace(paymentResult.Data.PaymentURL)
       window.location.href = paymentResult.Data.PaymentURL
-      // history.push('/redirect')
     }
     if (!order || successPay || order._id !== orderId || successDeliver) {
       //reset the order page to not have the effect loop infinitely
@@ -98,7 +95,6 @@ const OrderScreen = ({ match, history }) => {
   }, [dispatch, order, orderId, successPay])*/
 
   const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult)
     dispatch(payOrder(orderId, paymentResult))
   }
 

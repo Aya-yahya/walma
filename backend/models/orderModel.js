@@ -30,7 +30,6 @@ const orderSchema = mongoose.Schema(
       address: { type: String, required: true },
       city: { type: String, required: true },
       phoneNumber: { type: String, required: true },
-      country: { type: String, required: true },
     },
     paymentMethod: {
       type: String,
@@ -39,9 +38,9 @@ const orderSchema = mongoose.Schema(
 
     paymentResult: {
       id: { type: String },
+      payment_id: { type: String },
       status: { type: String },
       update_time: { type: String },
-      email_address: { type: String },
     },
     itemsPrice: {
       type: Number,

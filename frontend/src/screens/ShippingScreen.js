@@ -15,7 +15,7 @@ const ShippingScreen = ({ history }) => {
   const [paymentMethod, setPaymentMethod] = useState(0)
   const [city, setCity] = useState(shippingAddress.city)
   const [phoneNumber, setPhoneNumber] = useState(shippingAddress.phoneNumber)
-  const [country, setCountry] = useState(shippingAddress.country)
+
   const dispatch = useDispatch()
 
   cart.itemsPrice = cart.cartItems.reduce(
@@ -46,7 +46,7 @@ const ShippingScreen = ({ history }) => {
     dispatch(
       createOrder({
         orderItems: cart.cartItems,
-        shippingAddress: { address, city, phoneNumber, country },
+        shippingAddress: { address, city, phoneNumber },
         paymentMethod: paymentMethod,
         itemsPrice: cart.itemsPrice,
         shippingPrice: cart.shippingPrice,
@@ -98,18 +98,8 @@ const ShippingScreen = ({ history }) => {
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 ></Form.Control>
               </Form.Group>
-              <Form.Group controlId='country'>
-                <Form.Label>{t('country')}</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Enter Country'
-                  value={country}
-                  required
-                  onChange={(e) => setCountry(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
             </Col>
-            <Col>
+            <Col xs={12} sm={12} md={5}>
               <h4
                 style={{ marginTop: '0.5rem', marginBottom: '1.5rem' }}
                 className='text-center '
@@ -126,7 +116,6 @@ const ShippingScreen = ({ history }) => {
                     value={1}
                     onChange={(e) => {
                       setPaymentMethod(e.target.value)
-                      console.log(paymentMethod)
                     }}
                   ></Form.Check>
                 </Col>
@@ -139,7 +128,6 @@ const ShippingScreen = ({ history }) => {
                     value={2}
                     onChange={(e) => {
                       setPaymentMethod(e.target.value)
-                      console.log(paymentMethod)
                     }}
                   ></Form.Check>
                 </Col>

@@ -74,7 +74,6 @@ export const payOrder = (totalPrice) => async (dispatch, getState) => {
 
     const { data } = await axios.post(`/api/orders/payid`, totalPrice, {})
 
-    console.log(data)
     dispatch({ type: ORDER_PAY_SUCCESS, payload: data })
   } catch (error) {
     dispatch({
@@ -207,7 +206,6 @@ export const payfor = () => async (dispatch, getState) => {
     pay,
     config
   )
-  console.log(data)
 }
 
 export const listOrders = () => async (dispatch, getState) => {

@@ -21,6 +21,7 @@ import {
   getOrderDetails,
   payOrder,
   deliverOrder,
+  payForOrder,
 } from '../actions/orderActions'
 import {
   ORDER_PAY_RESET,
@@ -128,7 +129,7 @@ const OrderScreen = ({ match, history }) => {
   }
 
   const payHandler = async () => {
-    dispatch(payOrder(order))
+    dispatch(payForOrder(order))
   }
 
   const deliverHandler = () => {

@@ -31,7 +31,10 @@ const ProductScreen = ({ history, match }) => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-
+  var date = new Date()
+  const today =
+    '' + date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay()
+  console.log(today)
   useEffect(() => {
     dispatch(listProductDetails(match.params.id)) // match.params.id takes the id part of the current url and we pass it in here as an argument to get that specific product
   }, [dispatch, match])
@@ -93,20 +96,39 @@ const ProductScreen = ({ history, match }) => {
                   <ListGroup.Item className='noborder'>
                     <Row className='align-items-center  justify-content-center'>
                       <Col md={5} className='justify-content-center'>
-                        <Form.Control
-                          as='select'
-                          className='sm mr-sm-2 '
-                          id='inlineFormCustomSelect'
-                          custom
-                          value={qty}
-                          onChange={(e) => setQty(e.target.value)}
-                        >
-                          {[...Array(product.countInStock).keys()].map((x) => (
-                            <option key={x + 1} value={x + 1}>
-                              {x + 1}
-                            </option>
-                          ))}
-                        </Form.Control>
+                        {product.sale && product.sale.qty > 0 ? (
+                          <Form.Control
+                            as='select'
+                            className='sm mr-sm-2 '
+                            id='inlineFormCustomSelect'
+                            custom
+                            value={qty}
+                            onChange={(e) => setQty(e.target.value)}
+                          >
+                            {[...Array(product.sale.qty).keys()].map((x) => (
+                              <option key={x + 1} value={x + 1}>
+                                {x + 1}
+                              </option>
+                            ))}
+                          </Form.Control>
+                        ) : (
+                          <Form.Control
+                            as='select'
+                            className='sm mr-sm-2 '
+                            id='inlineFormCustomSelect'
+                            custom
+                            value={qty}
+                            onChange={(e) => setQty(e.target.value)}
+                          >
+                            {[...Array(product.countInStock).keys()].map(
+                              (x) => (
+                                <option key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </option>
+                              )
+                            )}
+                          </Form.Control>
+                        )}
                       </Col>
                       <Col md={5} style={{ marginTop: '20px' }}>
                         <Button
@@ -128,7 +150,28 @@ const ProductScreen = ({ history, match }) => {
                         // md={6}
                         className=' align-items-center justify-content-center'
                       >
-                        <h4>{t('price', { val: product.price })}</h4>
+                        {product.sale &&
+                        product.sale.status &&
+                        product.sale.qty > 0 ? (
+                          <>
+                            <Col>
+                              <h4>
+                                <del style={{ color: '#ed9003' }}>
+                                  {product.price} KD
+                                </del>
+                              </h4>
+                            </Col>
+                            <h5>
+                              <text>
+                                {product.price -
+                                  product.price * product.sale.discount}{' '}
+                                KD
+                              </text>
+                            </h5>
+                          </>
+                        ) : (
+                          <h4>{t('price', { val: product.price })}</h4>
+                        )}
                       </Col>
                     </Row>
                   </ListGroup.Item>

@@ -27,9 +27,29 @@ const Product = ({ product }) => {
           </Card.Title>
         </Link>
         <Container className=' align-items-center justify-content-center'>
-          <Card.Text as='h6' style={{ color: 'black' }} className='text-center'>
-            {product.price} KD
-          </Card.Text>
+          {product.sale.status ? (
+            <Card.Text
+              as='h6'
+              style={{ color: 'black' }}
+              className='text-center'
+            >
+              <Col>
+                <del style={{ color: '#ed9003' }}>{product.price} KD</del>
+              </Col>
+
+              <text>
+                {product.price - product.price * product.sale.discount} KD
+              </text>
+            </Card.Text>
+          ) : (
+            <Card.Text
+              as='h6'
+              style={{ color: 'black' }}
+              className='text-center'
+            >
+              {product.price} KD
+            </Card.Text>
+          )}
         </Container>
       </Card.Body>
     </Card>

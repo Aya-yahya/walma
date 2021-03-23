@@ -39,18 +39,46 @@ const OrderScreen = ({ match, history }) => {
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: loadingPay, success: successPay, paymentResult } = orderPay
 
+  const orderPaid = useSelector((state) => state.orderPaid)
+  const { loading: loadingPaid, success: successPaid } = orderPaid
+
   const orderDeliver = useSelector((state) => state.orderDeliver)
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  var id, paymentId, status
+
   useEffect(() => {
     // we use javascript to dynamically add a script like the one here https://developer.paypal.com/docs/checkout/reference/customize-sdk/
+    if (match.path.includes('success') || match.path.includes('error')) {
+      id = match.params.id
+      paymentId = match.params.paymentId
+      if (match.path.includes('success')) {
+        status = 'success'
+      }
+      if (match.path.includes('error')) {
+        status = 'error'
+      }
+      const paymentResult = {
+        status: status,
+        id: id,
+        paymentId: paymentId,
+      }
+
+      dispatch(payOrder(order._id, paymentResult))
+    }
     if (successPay) {
       window.location.href = paymentResult.Data.PaymentURL
     }
-    if (!order || successPay || order._id !== orderId || successDeliver) {
+    if (
+      !order ||
+      successPay ||
+      successPaid ||
+      order._id !== orderId ||
+      successDeliver
+    ) {
       //reset the order page to not have the effect loop infinitely
       dispatch({ type: ORDER_PAY_RESET })
       dispatch({ type: ORDER_DELIVER_RESET })
@@ -59,6 +87,7 @@ const OrderScreen = ({ match, history }) => {
     }
   }, [
     dispatch,
+    successPaid,
     orderId,
     successPay,
     order,
@@ -265,7 +294,7 @@ const OrderScreen = ({ match, history }) => {
                     style={{ backgroundColor: 'black', color: '#ed9003' }}
                     className='center'
                   >
-                    pay
+                    {t('pay')}
                   </Button>
                 </ListGroup.Item>
               )}

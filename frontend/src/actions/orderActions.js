@@ -18,6 +18,10 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_RESET,
+  ORDER_PAID_REQUEST,
+  ORDER_PAID_SUCCESS,
+  ORDER_PAID_FAIL,
+  ORDER_PAID_RESET,
 } from '../constants/orderConstants'
 
 import axios from 'axios'
@@ -66,18 +70,29 @@ export const getOrderDetails = (id) => async (dispatch) => {
   }
 }
 
-export const payOrder = (totalPrice) => async (dispatch, getState) => {
+export const payOrder = (orderId, paymentResult) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({
-      type: ORDER_PAY_REQUEST,
+      type: ORDER_PAID_REQUEST,
     })
 
-    const { data } = await axios.post(`/api/orders/payid`, totalPrice, {})
+    const {
+      userLogin: { userInfo },
+    } = getState() // we destructure two levels in to get userInfo, which is the logged in user's object
 
-    dispatch({ type: ORDER_PAY_SUCCESS, payload: data })
+    const { data } = await axios.put(
+      `/api/orders/${orderId}/pay`,
+      paymentResult,
+      {}
+    ) //pass the id into this route as well as the config and extract data
+
+    dispatch({ type: ORDER_PAID_SUCCESS })
   } catch (error) {
     dispatch({
-      type: ORDER_PAY_FAIL,
+      type: ORDER_PAID_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

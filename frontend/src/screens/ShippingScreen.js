@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { saveShippingAddress } from '../actions/cartActions'
 import { savePaymentMethod } from '../actions/cartActions'
 import { createOrder } from '../actions/orderActions'
+import head from '../coffee.jpg'
 
 const ShippingScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart)
@@ -122,6 +123,7 @@ const ShippingScreen = ({ history }) => {
                 <Col style={{ marginLeft: '30px', marginTop: '30px' }}>
                   <Form.Check
                     type='radio'
+                    //label={head}
                     label='VISA/MASTER'
                     id='PayPal'
                     name='paymentMethod'

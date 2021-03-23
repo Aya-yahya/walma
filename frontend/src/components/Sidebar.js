@@ -12,39 +12,39 @@ export default () => {
     <Menu right>
       <Image src={head} style={{ width: '250px' }} />
       <a className='menu-item' href='/'>
-        Home
+        {t('home')}
       </a>
       {userInfo && userInfo.isAdmin && (
         <a className='menu-item' href='/admin/userlist'>
-          users list
+          {t('usersList')}
         </a>
       )}
       {userInfo && userInfo.isAdmin && (
         <a className='menu-item' href='/admin/productlist'>
-          Products list
+          {t('productsList')}
         </a>
       )}
       {userInfo && userInfo.isAdmin && (
         <a className='menu-item' href='/admin/orderlist'>
-          orders list
+          {t('ordersList')}
         </a>
       )}
       {userInfo ? (
         <a className='menu-item' href='/profile'>
-          profile
+          {t('profile')}
         </a>
       ) : (
         <a className='menu-item' href='/login'>
-          login
+          {t('login')}
         </a>
       )}
       {userInfo ? (
         <a className='menu-item' href='/'>
-          logout
+          {t('logout')}
         </a>
       ) : (
         <a className='menu-item' href='/register'>
-          Register
+          {t('register')}
         </a>
       )}
     </Menu>

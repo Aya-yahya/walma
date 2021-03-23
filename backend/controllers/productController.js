@@ -2,21 +2,29 @@ import Product from '../models/productModel.js'
 import asyncHandler from 'express-async-handler'
 
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 10
-  const page = Number(req.query.pageNumber) || 1
-
   const keyword = req.query.keyword
-    ? { name: { $regex: req.query.keyword, $options: 'i' } }
+    ? {
+        name: {
+          en: { $regex: req.query.keyword, $options: 'i' },
+          ar: { $regex: req.query.keyword, $options: 'i' },
+        },
+      }
     : {} //req.query is how you get query strings, aka anything after the ? in the URL
   //using $regex lets it search up partially correct terms and $options: 'i' makes it case insensitive
 
-  const count = await Product.countDocuments({ ...keyword })
+  const products1 = await Product.find({
+    'name.en': { $regex: req.query.keyword, $options: 'i' },
+  })
+  const products2 = await Product.find({
+    'name.ar': { $regex: req.query.keyword, $options: 'i' },
+  })
 
-  const products = await Product.find({ ...keyword })
-    .limit(pageSize)
-    .skip(pageSize * (page - 1)) //10 products per page
+  res.json(products1.concat(products2))
+})
 
-  //  res.json({ products, page, pages: Math.ceil(count / pageSize) })
+const getAllProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({})
+
   res.json(products)
 })
 
@@ -94,4 +102,5 @@ export {
   deleteProduct,
   createProduct,
   updateProduct,
+  getAllProducts,
 }

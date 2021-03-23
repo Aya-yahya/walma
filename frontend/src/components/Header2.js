@@ -12,6 +12,7 @@ import {
   Nav,
   NavDropdown,
   DropdownButton,
+  Form,
   Dropdown,
   Row,
   NavLink,
@@ -145,10 +146,10 @@ const Header2 = ({ history }) => {
                           className='caret'
                         >
                           <LinkContainer to='/profile'>
-                            <NavDropdown.Item>Profile</NavDropdown.Item>
+                            <NavDropdown.Item>{t('profile')}</NavDropdown.Item>
                           </LinkContainer>
                           <NavDropdown.Item onClick={logoutHandler}>
-                            Logout
+                            {t('logout')}
                           </NavDropdown.Item>
                         </NavDropdown>
                       </Nav.Item>
@@ -161,7 +162,7 @@ const Header2 = ({ history }) => {
                                 className='fas fa-user  fa-lg'
                                 style={{ marginLeft: '1rem' }}
                               ></i>{' '}
-                              login
+                              {t('login')}
                             </span>
                           </Nav.Link>
                         </LinkContainer>
@@ -176,7 +177,7 @@ const Header2 = ({ history }) => {
                                 className='fas fa-user-cog '
                                 style={{ marginLeft: '1rem' }}
                               ></i>{' '}
-                              Admin
+                              {t('admin')}
                             </span>
                           }
                           id='adminmenu'
@@ -184,18 +185,24 @@ const Header2 = ({ history }) => {
                           className='caret'
                         >
                           <LinkContainer to='/admin/userlist'>
-                            <NavDropdown.Item>Users</NavDropdown.Item>
+                            <NavDropdown.Item>
+                              {t('usersList')}
+                            </NavDropdown.Item>
                           </LinkContainer>
                           <LinkContainer to='/admin/productlist'>
-                            <NavDropdown.Item>Products</NavDropdown.Item>
+                            <NavDropdown.Item>
+                              {t('productsList')}
+                            </NavDropdown.Item>
                           </LinkContainer>
                           <LinkContainer to='/admin/orderlist'>
-                            <NavDropdown.Item>Orders</NavDropdown.Item>
+                            <NavDropdown.Item>
+                              {t('ordersList')}
+                            </NavDropdown.Item>
                           </LinkContainer>
-
+                          {/*}
                           <LinkContainer to='/admin/promocodes'>
                             <NavDropdown.Item>PromoCodes</NavDropdown.Item>
-                          </LinkContainer>
+                        </LinkContainer>*/}
                         </NavDropdown>
                       </Nav.Item>
                     )}

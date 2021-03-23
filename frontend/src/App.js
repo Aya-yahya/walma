@@ -76,6 +76,7 @@ function App() {
             exact
           />
         </main>
+        <Footer />
       </div>
     </Router>
   )

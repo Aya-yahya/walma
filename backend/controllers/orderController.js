@@ -60,8 +60,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     order.paymentResult = {
       id: req.body.id,
       status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.payer.email_address,
+      payment_id: req.body.paymentId,
     }
 
     const updatedOrder = await order.save()
@@ -78,15 +77,50 @@ const getMyOrders = asyncHandler(async (req, res) => {
 })
 
 const payMyOrders = asyncHandler(async (req, res) => {
-  console.log(req)
+  var config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization:
+        'Bearer rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',
+    },
+  }
+
+  var data1 = JSON.stringify({
+    InvoiceAmount: req.body.totalPrice,
+    CurrencyIso: 'KWD',
+  })
+
+  var config2 = {
+    headers: {
+      Authorization:
+        'Bearer rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',
+      'Content-Type': 'application/json',
+    },
+  }
+
+  var { data } = await axios.post(
+    'https://apitest.myfatoorah.com/v2/InitiatePayment',
+    data1,
+    config2
+  )
+  var ServiceCharge
+
+  data.Data.PaymentMethods.map((m) => {
+    if (Number(m.PaymentMethodId) === Number(req.body.paymentMethod)) {
+      ServiceCharge = m.ServiceCharge
+    }
+  })
+
+  const total = req.body.totalPrice + ServiceCharge
+
   var dat = JSON.stringify({
-    PaymentMethodId: 1,
+    PaymentMethodId: req.body.paymentMethod,
     CustomerName: 'test',
     DisplayCurrencyIso: 'kwd',
     MobileCountryCode: '965',
     CustomerMobile: '12345678',
     CustomerEmail: 'mail@mail.com',
-    InvoiceValue: req.body.totalPrice,
+    InvoiceValue: total,
     CallBackUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/success`,
     ErrorUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/error`,
     Language: 'en',
@@ -104,14 +138,14 @@ const payMyOrders = asyncHandler(async (req, res) => {
       {
         SupplierCode: 1,
         ProposedShare: null,
-        InvoiceShare: req.body.totalPrice,
+        InvoiceShare: total,
       },
     ],
     InvoiceItems: [
       {
         ItemName: 'name',
         Quantity: '1',
-        UnitPrice: req.body.totalPrice,
+        UnitPrice: total,
         Description: 'string',
         Weight: 0.5,
         Width: 10,
@@ -122,21 +156,13 @@ const payMyOrders = asyncHandler(async (req, res) => {
     SourceInfo: 'string',
   })
 
-  var config = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization:
-        'Bearer rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',
-    },
-  }
-
-  const { data } = await axios.post(
+  const { data: data2 } = await axios.post(
     'https://apitest.myfatoorah.com/v2/ExecutePayment',
     dat,
     config
   )
 
-  res.json(data)
+  res.json(data2)
 })
 
 const getOrders = asyncHandler(async (req, res) => {

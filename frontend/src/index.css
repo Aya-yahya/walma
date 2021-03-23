@@ -168,6 +168,12 @@ h3 {
 .bm-cross {
   background: #ed9003;
 }
+.label-btn {
+  background-color: black;
+}
+.label-btn :active {
+  background-color: #ed9003;
+}
 
 /*
 Sidebar wrapper styles

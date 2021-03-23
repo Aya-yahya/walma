@@ -13,35 +13,38 @@ const SearchBox = ({ history }) => {
     }
   }
   return (
-    <Form onSubmit={submitHandler} style={{ marginTop: '20px' }}>
-      <InputGroup className='mb-3'>
-        <Form.Control
-          type='text'
-          name='q'
-          onChange={(e) => setKeyword(e.target.value)}
-          placeholder='Search products...'
+    <InputGroup className='mb-3'>
+      <Form.Control
+        type='text'
+        name='q'
+        onChange={(e) => {
+          setKeyword(e.target.value)
+          submitHandler(e)
+        }}
+        placeholder='Search products...'
+        style={{
+          color: '#ED9003',
+          background: 'black',
+          borderColor: 'black',
+        }}
+      ></Form.Control>
+      <InputGroup.Append>
+        <Button
+          // className='gold'
+          type='button'
+          onClick={(e) => submitHandler(e)}
           style={{
             color: '#ED9003',
-            background: 'white',
+            background: 'black',
+
             borderColor: 'black',
+            position: 'static',
           }}
-        ></Form.Control>
-        <InputGroup.Append>
-          <Button
-            // className='gold'
-            type='submit'
-            style={{
-              color: '#ED9003',
-              background: 'black',
-              borderColor: 'black',
-              position: 'static',
-            }}
-          >
-            <i className='fas fa-search'></i>
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
-    </Form>
+        >
+          <i className='fas fa-search'></i>
+        </Button>
+      </InputGroup.Append>
+    </InputGroup>
   )
 }
 

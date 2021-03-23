@@ -16,37 +16,47 @@ import {
   Image,
   Container,
 } from 'react-bootstrap'
-import { listProducts } from '../actions/productActions'
+import { listProducts, listAllProducts } from '../actions/productActions'
 import { useTranslation } from 'react-i18next'
 
 const HomeScreen = ({ match }) => {
   const [select, setSelect] = useState('')
+
   const { t, i18n } = useTranslation()
-  const pageNumber = match.params.pageNumber || 1
-  const keyword = match.params.keyword // remember we set this to keyword in App.js in the route
+  const [state, setState] = useState('offers')
   const dispatch = useDispatch()
-  const productList = useSelector((state) => state.productList)
-  const { loading, error, products, page, pages } = productList
+  const productList = useSelector((state) => state.allProductsList)
+  const { loading, error, products } = productList
 
   useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber))
-  }, [dispatch, keyword, pageNumber])
+    dispatch(listAllProducts())
+  }, [dispatch, state])
   //const products = []
+
+  const handleProducts = (e) => {
+    e.preventDefault()
+    setState('products')
+  }
+  const handleOffers = (e) => {
+    e.preventDefault()
+    setState('offers')
+  }
 
   return (
     <>
       <Row fluid style={{ margin: '0px' }}>
         <Image src={head} width='100%' height='300px' className='head' />
       </Row>
+      <ButtonGroup className='mb-2 center'>
+        <Button type='button' className='label-btn' onClick={handleProducts}>
+          products
+        </Button>
 
-      <Nav justify variant='tabs' defaultActiveKey='/home'>
-        <Nav.Item>
-          <Nav.Link eventKey='link-1'>{t('products')}</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey='link-1'>{t('offers')}</Nav.Link>
-        </Nav.Item>
-      </Nav>
+        <Button type='button' className='label-btn ' onClick={handleOffers}>
+          offers
+        </Button>
+      </ButtonGroup>
+
       <Container>
         {loading ? (
           <Loader />
@@ -54,13 +64,27 @@ const HomeScreen = ({ match }) => {
           <Message variant='danger'>{error}</Message>
         ) : (
           <>
-            <Row>
-              {products.map((product) => (
-                <Col key={product._id} sm={6} md={3} xs={6}>
-                  <Product product={product} />
-                </Col>
-              ))}
-            </Row>
+            {state === 'offers' ? (
+              <Row>
+                {products
+                  .filter((product) => product.sale.status === true)
+                  .map((product) => (
+                    <Col key={product._id} sm={6} md={3} xs={6}>
+                      <Product product={product} />
+                    </Col>
+                  ))}
+              </Row>
+            ) : (
+              <Row>
+                {products
+                  .filter((product) => product.sale.status === false)
+                  .map((product) => (
+                    <Col key={product._id} sm={6} md={3} xs={6}>
+                      <Product product={product} />
+                    </Col>
+                  ))}
+              </Row>
+            )}
           </>
         )}
       </Container>

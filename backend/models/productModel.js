@@ -14,6 +14,12 @@ const productSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    sale: {
+      status: { type: Boolean, required: true, default: false },
+      discount: { type: Number, required: true, default: 0 },
+      qty: { type: Number, required: true, default: 0 },
+      lastDay: { type: Date },
+    },
     name: {
       type: String,
       required: true,

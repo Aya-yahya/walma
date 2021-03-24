@@ -54,7 +54,7 @@ const HomeScreen = ({ match }) => {
           onClick={handleProducts}
           active={state === 'products' ? true : false}
         >
-          products
+          {t('products')}
         </Button>
 
         <Button
@@ -63,7 +63,7 @@ const HomeScreen = ({ match }) => {
           onClick={handleOffers}
           active={state === 'offers' ? true : false}
         >
-          offers
+          {t('offers')}
         </Button>
       </ButtonGroup>
 

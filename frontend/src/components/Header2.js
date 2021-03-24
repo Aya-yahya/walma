@@ -24,13 +24,14 @@ const Header2 = ({ history }) => {
   const { t, i18n } = useTranslation()
   const [language, setLanguage] = useState('ar')
   const dispatch = useDispatch()
+  const [show, setShow] = useState(false)
   const [keyword, setKeyword] = useState('')
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   const cart = useSelector((state) => state.cart)
   const { cartItems, lang } = cart
-  document.documentElement.dir = 'ltr'
+  //document.documentElement.dir = 'ltr'
   const numItems = cartItems.length
 
   const logoutHandler = () => {
@@ -49,7 +50,7 @@ const Header2 = ({ history }) => {
   }
 
   return (
-    <header>
+    <header dir='ltr'>
       <Row className='justify-content-center align-items-center'>
         <Col md={12} sm={12} xs={{ span: 12 }}>
           <Navbar
@@ -79,6 +80,7 @@ const Header2 = ({ history }) => {
               md={{ span: 4 }}
               sm={{ span: 4 }}
               xs={{ span: 4 }}
+              className='d-none d-lg-block d-md-block'
               //   style={{ backgroundColor: 'red' }}
               // className='mr-auto'
             >
@@ -87,6 +89,38 @@ const Header2 = ({ history }) => {
                   <SearchBox history={history} style={{ position: 'static' }} />
                 )}
               />
+            </Col>
+            <Col
+              sm={{ span: 11, order: 5 }}
+              xs={{ span: 11, order: 5 }}
+              className={show ? 'd-block d-md-none d-lg-none ' : 'd-none'}
+              // style={{ backgroundColor: 'red' }}
+              // className='mr-auto'
+            >
+              <Route
+                render={({ history }) => (
+                  <SearchBox history={history} style={{ position: 'static' }} />
+                )}
+              />
+            </Col>
+            <Col
+              sm={{ span: 1, order: 6 }}
+              xs={{ span: 1, order: 6 }}
+              className={show ? 'd-block d-md-none d-lg-none ' : 'd-none'}
+              style={{ marginBottom: '14px' }}
+              // className='mr-auto'
+            >
+              <Button
+                onClick={() => setShow(false)}
+                className='center'
+                style={{
+                  color: '#ed9003',
+                  backgroundColor: 'black',
+                  borderColor: 'black',
+                }}
+              >
+                <i class='fas fa-times fa-lg my-1'></i>
+              </Button>
             </Col>
             <Col
               md={{ span: 6 }}
@@ -98,6 +132,22 @@ const Header2 = ({ history }) => {
                 className='flex-row justify-content-end'
                 //   dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}
               >
+                <Nav.Item
+                  className={show ? 'd-none' : 'd-block d-md-none d-lg-none'}
+                >
+                  <Button
+                    value={language}
+                    onClick={() => setShow(true)}
+                    style={{
+                      color: '#ed9003',
+                      backgroundColor: 'black',
+                      borderColor: 'black',
+                      marginTop: '5px',
+                    }}
+                  >
+                    <i className='fas fa-search fa-lg'></i>
+                  </Button>
+                </Nav.Item>
                 <Nav.Item>
                   <Nav.Link href='/cart'>
                     <i

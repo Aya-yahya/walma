@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler'
+import Product from '../models/productModel.js'
 import Order from '../models/orderModel.js'
 import axios from 'axios'
 
@@ -51,10 +52,20 @@ const getOrderById = asyncHandler(async (req, res) => {
 })
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id)
+  console.log(req.body)
+  const order = await Order.findById(req.params.id).populate(
+    'orderItems.product'
+  )
 
   if (order) {
     if (req.body.status === 'success') {
+      order.orderItems.map((p) => {
+        p.product.countInStock = p.product.countInStock - p.qty
+        if (p.product.sale.status) {
+          p.product.sale.qty = p.product.sale.qty - p.qty
+        }
+        p.product.save()
+      })
       order.isPaid = true
       order.paidAt = Date.now()
     }
@@ -74,6 +85,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 })
 
 const getMyOrders = asyncHandler(async (req, res) => {
+  // console.log(req)
   const orders = await Order.find({ user: req.user._id })
   res.json(orders)
 })
@@ -137,8 +149,10 @@ const payMyOrders = asyncHandler(async (req, res) => {
     CustomerMobile: '12345678',
     CustomerEmail: 'mail@mail.com',
     InvoiceValue: total,
-    CallBackUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/success`,
-    ErrorUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/error`,
+    CallBackUrl: `http://127.0.0.1:3000/order/${req.body._id}/success`,
+    ErrorUrl: `http://127.0.0.1:3000/order/${req.body._id}/error`,
+    //   CallBackUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/success`,
+    //  ErrorUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/error`,
     Language: 'en',
     CustomerReference: 'string',
     CustomerCivilId: 'string',

@@ -7,6 +7,7 @@ import { saveShippingAddress } from '../actions/cartActions'
 import { savePaymentMethod } from '../actions/cartActions'
 import { createOrder } from '../actions/orderActions'
 import head from '../coffee.jpg'
+import { CART_RESET_ITEMS } from '../constants/cartConstants'
 
 const ShippingScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart)
@@ -37,9 +38,10 @@ const ShippingScreen = ({ history }) => {
 
   useEffect(() => {
     if (success) {
+      dispatch({ type: CART_RESET_ITEMS })
       history.push(`/order/${order._id}`)
     }
-  }, [success, history])
+  }, [dispatch, success, history])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -55,6 +57,7 @@ const ShippingScreen = ({ history }) => {
         totalPrice: cart.totalPrice,
       })
     )
+    dispatch({ type: CART_RESET_ITEMS })
   }
 
   return (

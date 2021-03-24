@@ -24,7 +24,7 @@ const SearchBox = ({ history }) => {
         placeholder='Search products...'
         style={{
           color: '#ED9003',
-          background: 'black',
+          background: 'white',
           borderColor: 'black',
         }}
       ></Form.Control>

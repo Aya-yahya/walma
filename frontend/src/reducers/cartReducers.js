@@ -1,6 +1,7 @@
 import {
   CART_ADD_ITEM,
   CART_REMOVE_ITEM,
+  CART_RESET_ITEMS,
   CART_SAVE_SHIPPING_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
   LANGUAGE_SAVE,
@@ -14,7 +15,6 @@ export const cartReducer = (
     case CART_ADD_ITEM:
       const item = action.payload
       const existItem = state.cartItems.find((x) => x.product === item.product)
-
       if (existItem) {
         return {
           ...state,
@@ -41,6 +41,11 @@ export const cartReducer = (
       return {
         ...state,
         paymentMethod: action.payload,
+      }
+    case CART_RESET_ITEMS:
+      localStorage.setItem('cartItems', [])
+      return {
+        ...state,
       }
 
     default:

@@ -23,7 +23,7 @@ const HomeScreen = ({ match }) => {
   const [select, setSelect] = useState('')
 
   const { t, i18n } = useTranslation()
-  const [state, setState] = useState('offers')
+  const [state, setState] = useState('products')
   const dispatch = useDispatch()
   const productList = useSelector((state) => state.allProductsList)
   const { loading, error, products } = productList
@@ -48,11 +48,21 @@ const HomeScreen = ({ match }) => {
         <Image src={head} width='100%' height='300px' className='head' />
       </Row>
       <ButtonGroup className='mb-2 center'>
-        <Button type='button' className='label-btn' onClick={handleProducts}>
+        <Button
+          type='button'
+          className='label-btn'
+          onClick={handleProducts}
+          active={state === 'products' ? true : false}
+        >
           products
         </Button>
 
-        <Button type='button' className='label-btn ' onClick={handleOffers}>
+        <Button
+          type='button'
+          className='label-btn '
+          onClick={handleOffers}
+          active={state === 'offers' ? true : false}
+        >
           offers
         </Button>
       </ButtonGroup>

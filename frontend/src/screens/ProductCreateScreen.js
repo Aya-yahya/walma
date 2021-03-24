@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import { Form, Row, Col, Button, Container } from 'react-bootstrap'
 //import Message from '../components/Message'
 //import Loader from '../components/Loader'
@@ -13,6 +15,10 @@ const ProductCreateScreen = ({ match, history }) => {
   const dispatch = useDispatch()
   const { t, i18n } = useTranslation()
   const [arabicName, setArabicName] = useState('')
+  const [onSale, setOnSale] = useState(false)
+  const [saleQty, setSaleQty] = useState(0)
+  const [discount, setDiscount] = useState(0)
+  const [lastDate, setLastDate] = useState(new Date())
   const [englishName, setEnglishName] = useState('')
   const [price, setPrice] = useState(0)
   const [image, setImage] = useState('')
@@ -44,6 +50,10 @@ const ProductCreateScreen = ({ match, history }) => {
         englishName,
         price,
         image,
+        onSale,
+        discount,
+        lastDate,
+        saleQty,
 
         descriptionAR,
         descriptionEN,
@@ -73,7 +83,7 @@ const ProductCreateScreen = ({ match, history }) => {
   }
 
   return (
-    <>
+    <Container>
       <Link to='/admin/productlist' className='btn btn-light my-3'>
         Go back
       </Link>
@@ -96,6 +106,7 @@ const ProductCreateScreen = ({ match, history }) => {
                 }}
               ></Form.Control>
             </Col>
+
             <Col md={5}>
               <Form.Control
                 type='name'
@@ -182,6 +193,55 @@ const ProductCreateScreen = ({ match, history }) => {
               ></Form.Control>
             </Col>
           </Form.Row>
+          <Form.Row>
+            <Col md={3}>
+              <Form.Check
+                type='checkbox'
+                label={t('onsale')}
+                onChange={(e) => {
+                  setOnSale(!onSale)
+                  console.log(onSale)
+                }}
+              />
+            </Col>
+            <Col md={2}>
+              <Form.Label>
+                <strong>{t('countOnSale')}</strong>
+              </Form.Label>
+            </Col>
+            <Col md={2}>
+              <Form.Control
+                type='number'
+                placeholder='Enter count in sale'
+                value={saleQty}
+                onChange={(e) => setSaleQty(e.target.value)}
+              ></Form.Control>
+            </Col>
+            <Col md={2}>
+              <Form.Label>
+                <strong>{t('discount')}</strong>
+              </Form.Label>
+            </Col>
+            <Col md={2}>
+              <Form.Control
+                type='number'
+                placeholder='Enter disscount'
+                value={discount}
+                onChange={(e) => setDiscount(e.target.value)}
+              ></Form.Control>
+            </Col>
+          </Form.Row>
+          <Form.Row className='center my-3'>
+            <Col md={3}>
+              <Form.Label>{t('salelastdate')}</Form.Label>
+            </Col>
+            <DatePicker
+              selected={lastDate}
+              onChange={(date) => {
+                setLastDate(date)
+              }}
+            />
+          </Form.Row>
           <Container className='text-center'>
             <Button
               type='submit'
@@ -197,7 +257,7 @@ const ProductCreateScreen = ({ match, history }) => {
           </Container>
         </Form>
       </FormContainer>
-    </>
+    </Container>
   )
 }
 export default ProductCreateScreen

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Form, Button, Col } from 'react-bootstrap'
+import { Form, Button, Col, Container } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
@@ -50,7 +50,7 @@ const UserEditScreen = ({ match, history }) => {
     dispatch(updateUser({ _id: userId, name, email, isAdmin }))
   }
   return (
-    <>
+    <Container>
       <Link to='/admin/userlist' className='btn btn-light my-3'>
         Go back
       </Link>
@@ -114,7 +114,7 @@ const UserEditScreen = ({ match, history }) => {
           </Form>
         )}
       </FormContainer>
-    </>
+    </Container>
   )
 }
 

@@ -52,23 +52,21 @@ const OrderScreen = ({ match, history }) => {
   var id, paymentId, status
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    id = params.get('Id')
+    paymentId = params.get('paymentId')
+
     // we use javascript to dynamically add a script like the one here https://developer.paypal.com/docs/checkout/reference/customize-sdk/
-    if (match.path.includes('success') || match.path.includes('error')) {
-      id = match.params.id
-      paymentId = match.params.paymentId
-      if (match.path.includes('success')) {
-        status = 'success'
-      }
-      if (match.path.includes('error')) {
-        status = 'error'
-      }
+    if (match.params.status) {
+      status = match.params.status
+
       const paymentResult = {
         status: status,
         id: id,
         paymentId: paymentId,
       }
 
-      dispatch(payOrder(order._id, paymentResult))
+      dispatch(payOrder(orderId, paymentResult))
     }
     if (successPay) {
       window.location.href = paymentResult.Data.PaymentURL
@@ -86,17 +84,7 @@ const OrderScreen = ({ match, history }) => {
       // lets us see order details before order comes in and after we pay
       dispatch(getOrderDetails(orderId))
     }
-  }, [
-    dispatch,
-    successPaid,
-    orderId,
-    successPay,
-    order,
-    successDeliver,
-    history,
-    userInfo,
-    paymentResult,
-  ])
+  }, [dispatch, orderId, successPay, successDeliver, paymentResult])
 
   /*
   useEffect(() => {
@@ -179,10 +167,10 @@ const OrderScreen = ({ match, history }) => {
                 {t('shippinginfo')}
               </h4>
               <h5 className='text-center'>
-                {order.isDelivered ? (
-                  <Badge pill variant='dark'>
+                {order.isDeliverd ? (
+                  <Badge pill variant='light'>
                     {' '}
-                    {t('delvon', { val: order.deliveredAt })}
+                    {t('delvon', { val: order.deliverdAt.slice(0, 10) })}
                   </Badge>
                 ) : (
                   <Badge pill variant='dark'>
@@ -193,9 +181,11 @@ const OrderScreen = ({ match, history }) => {
 
               <p className='text-center'>
                 <strong>{t('address')}: </strong>
-                {order.shippingAddress.address},{order.shippingAddress.city} ,
-                {order.shippingAddress.postalCode} ,
-                {order.shippingAddress.country}
+                {order.shippingAddress.address},{order.shippingAddress.city}
+              </p>
+              <p className='text-center'>
+                <strong>{t('phonenumber')} </strong>
+                {order.shippingAddress.phoneNumber}
               </p>
             </ListGroup.Item>
             <ListGroup.Item>
@@ -207,9 +197,9 @@ const OrderScreen = ({ match, history }) => {
               </h4>
               <h5 className='text-center'>
                 {order.isPaid ? (
-                  <Badge pill variant='dark'>
+                  <Badge pill variant='light'>
                     {'                          '}
-                    {t('paidon', { val: order.paidAt })}
+                    {t('paidon', { val: order.paidAt.slice(0, 10) })}
                   </Badge>
                 ) : (
                   <Badge pill variant='dark'>
@@ -221,7 +211,7 @@ const OrderScreen = ({ match, history }) => {
 
               <p className='text-center'>
                 <strong>{t('method')}: </strong>
-                {order.paymentMethod}
+                {order.paymentMethod === '1' ? 'KENET' : 'VISA/MASTER'}
               </p>
             </ListGroup.Item>
             <ListGroup.Item>
@@ -304,7 +294,7 @@ const OrderScreen = ({ match, history }) => {
               {userInfo &&
                 userInfo.isAdmin &&
                 order.isPaid &&
-                !order.isDelivered && (
+                !order.isDeliverd && (
                   <ListGroup.Item>
                     <Button
                       type='button'

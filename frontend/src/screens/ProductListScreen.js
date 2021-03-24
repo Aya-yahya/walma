@@ -10,6 +10,7 @@ import {
   listProducts,
   deleteProduct,
   createProduct,
+  listAllProducts,
 } from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
@@ -18,7 +19,7 @@ const ProductListScreen = ({ history, match }) => {
   const { t, i18n } = useTranslation()
   const dispatch = useDispatch()
 
-  const productList = useSelector((state) => state.productList)
+  const productList = useSelector((state) => state.allProductsList)
   const { loading, error, products } = productList
 
   const productDelete = useSelector((state) => state.productDelete)
@@ -36,7 +37,7 @@ const ProductListScreen = ({ history, match }) => {
     if (!userInfo.isAdmin) {
       history.push('/login')
     }
-    dispatch(listProducts(''))
+    dispatch(listAllProducts())
   }, [dispatch, history, userInfo, successDelete])
 
   const deleteHandler = (id) => {

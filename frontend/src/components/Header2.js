@@ -91,35 +91,36 @@ const Header2 = ({ history }) => {
               />
             </Col>
             <Col
-              sm={{ span: 11, order: 5 }}
-              xs={{ span: 11, order: 5 }}
-              className={show ? 'd-block d-md-none d-lg-none ' : 'd-none'}
+              sm={{ span: 10, order: 5 }}
+              xs={{ span: 10, order: 5 }}
+              className={show ? 'd-block d-md-none d-lg-none center' : 'd-none'}
               // style={{ backgroundColor: 'red' }}
               // className='mr-auto'
             >
               <Route
-                render={({ history }) => (
-                  <SearchBox history={history} style={{ position: 'static' }} />
-                )}
+                render={({ history }) => <SearchBox history={history} />}
               />
             </Col>
             <Col
-              sm={{ span: 1, order: 6 }}
-              xs={{ span: 1, order: 6 }}
-              className={show ? 'd-block d-md-none d-lg-none ' : 'd-none'}
-              style={{ marginBottom: '14px' }}
+              sm={{ span: 2, order: 6 }}
+              xs={{ span: 2, order: 6 }}
+              className={show ? 'd-block d-md-none d-lg-none' : 'd-none'}
+              style={{ marginBottom: '14px', marginLeft: '0px' }}
               // className='mr-auto'
             >
               <Button
                 onClick={() => setShow(false)}
-                className='center'
                 style={{
                   color: '#ed9003',
                   backgroundColor: 'black',
                   borderColor: 'black',
+                  marginLeft: '0px',
                 }}
               >
-                <i class='fas fa-times fa-lg my-1'></i>
+                <i
+                  className='fas fa-times fa-lg '
+                  style={{ marginLeft: '0px' }}
+                ></i>
               </Button>
             </Col>
             <Col

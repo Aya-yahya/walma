@@ -33,10 +33,8 @@ const Product = ({ product }) => {
               style={{ color: 'black' }}
               className='text-center'
             >
-              <Col>
-                <del style={{ color: '#ed9003' }}>{product.price} KD</del>
-              </Col>
-
+              <del style={{ color: '#ed9003' }}>{product.price} KD</del>
+              <br />
               <text>
                 {product.price - product.price * product.sale.discount} KD
               </text>

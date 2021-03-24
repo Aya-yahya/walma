@@ -225,7 +225,7 @@ const ProductEditScreen = ({ match, history }) => {
               </Col>
             </Form.Row>
             <Form.Row>
-              <Col md={3}>
+              <Col md={3} dir='ltr'>
                 <Form.Check
                   type='checkbox'
                   label={t('onsale')}

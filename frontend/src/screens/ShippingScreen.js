@@ -110,7 +110,10 @@ const ShippingScreen = ({ history }) => {
               >
                 {t('payment')}
               </h4>
-              <Form.Group style={{ marginLeft: '30px', marginTop: '30px' }}>
+              <Form.Group
+                style={{ marginLeft: '30px', marginTop: '30px' }}
+                dir='ltr'
+              >
                 <Col style={{ marginLeft: '30px', marginTop: '30px' }}>
                   <Form.Check
                     type='radio'

@@ -53,13 +53,18 @@ const deleteProduct = asyncHandler(async (req, res) => {
 
 const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
-    name: { en: 'sample name', ar: 'sample name' },
-    price: 0,
-    sale: { status: false, discount: 0, qty: 0 },
+    name: { en: req.body.englishName, ar: req.body.arabicName },
+    price: req.body.price,
+    sale: {
+      status: req.body.onSale,
+      discount: req.body.discount,
+      qty: req.body.saleQty,
+      lastDay: req.body.lastDate,
+    },
     user: req.user._id,
-    image: '/images/sample.jpg',
-    countInStock: 0,
-    description: { en: 'sample description', ar: 'sample description' },
+    image: req.body.image,
+    countInStock: req.body.countInStock,
+    description: { en: req.body.descriptionEN, ar: req.body.descriptionAR },
   })
 
   const createdProduct = await product.save()
@@ -88,12 +93,13 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.name = { en: englishName, ar: arabicName }
     product.price = price
     product.description = { en: descriptionEN, ar: descriptionAR }
-    product.sale.status = onSale
-    product.sale.discount = discount
-    product.sale.qty = saleQty
-    if (product.sale.status) {
-      product.sale.lastDay = lastDate
+    product.sale = {
+      status: req.body.onSale,
+      discount: req.body.discount,
+      qty: req.body.saleQty,
+      lastDay: req.body.lastDate,
     }
+
     product.image = image
 
     product.countInStock = countInStock

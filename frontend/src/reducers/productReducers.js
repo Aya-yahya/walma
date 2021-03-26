@@ -103,7 +103,7 @@ export const productCreateReducer = (state = { product: {} }, action) => {
   }
 }
 
-export const productUpdateReducer = (state = { product: {} }, action) => {
+export const productUpdateReducer = (state = { products: {} }, action) => {
   switch (
     action.type // this is where the reducer does things according to each type.
   ) {

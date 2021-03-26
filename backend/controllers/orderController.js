@@ -70,6 +70,53 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       })
       order.isPaid = true
       order.paidAt = Date.now()
+
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'Info.walmakwt@gmail.com',
+          pass: process.env.GMAIL_PASS,
+        },
+      })
+
+      var mailOptions = {
+        from: 'Info.walmakwt@gmail.com',
+        to: 'Info.walmakwt@gmail.com',
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!',
+      }
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          res.json(error)
+        } else {
+          res.json('Email sent: ' + info.response)
+        }
+      })
+    }
+    if (req.body.status === 'error') {
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'Info.walmakwt@gmail.com',
+          pass: process.env.GMAIL_PASS,
+        },
+      })
+
+      var mailOptions = {
+        from: 'Info.walmakwt@gmail.com',
+        to: 'Info.walmakwt@gmail.com',
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!',
+      }
+
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          res.json(error)
+        } else {
+          res.json('Email sent: ' + info.response)
+        }
+      })
     }
 
     order.paymentResult = {
@@ -96,23 +143,23 @@ const sendemail = asyncHandler(async (req, res) => {
   var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'ayameshref27@gmail.com',
-      pass: 'AyaYahya2721998',
+      user: 'Info.walmakwt@gmail.com',
+      pass: process.env.GMAIL_PASS,
     },
   })
 
   var mailOptions = {
-    from: 'ayameshref27@gmail.com',
-    to: 'ayameshref27@gmail.com',
+    from: 'Info.walmakwt@gmail.com',
+    to: 'Info.walmakwt@gmail.com',
     subject: 'Sending Email using Node.js',
     text: 'That was easy!',
   }
 
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log(error)
+      res.json(error)
     } else {
-      console.log('Email sent: ' + info.response)
+      res.json('Email sent: ' + info.response)
     }
   })
 })
@@ -121,22 +168,11 @@ const payMyOrders = asyncHandler(async (req, res) => {
   var config = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization:
-        'Bearer rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',
+      Authorization: 'Bearer ' + process.env.MY_FATOORAH_ID,
+      //'Bearer rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',
     },
   }
-  /*
-  var initiate = JSON.stringify({
-    InvoiceAmount: 100,
-    CurrencyIso: 'KWD',
-  })
-  console.log(initiate)
-  const { dataInitiate } = await axios.post(
-    'https://apitest.myfatoorah.com/v2/InitiatePayment',
-    initiate,
-    config
-  )
-*/
+
   var data1 = JSON.stringify({
     InvoiceAmount: req.body.totalPrice,
     CurrencyIso: 'KWD',
@@ -144,8 +180,8 @@ const payMyOrders = asyncHandler(async (req, res) => {
 
   var config2 = {
     headers: {
-      Authorization:
-        'Bearer rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',
+      Authorization: 'Bearer ' + process.env.MY_FATOORAH_ID,
+      //  'Bearer rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL',
       'Content-Type': 'application/json',
       Cookie:
         'ApplicationGatewayAffinityCORS=3ef0c0508ad415fb05a4ff3f87fb97da; ApplicationGatewayAffinity=3ef0c0508ad415fb05a4ff3f87fb97da',

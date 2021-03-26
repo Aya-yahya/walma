@@ -46,7 +46,7 @@
 }
 
 .fal {
-  color: #ed9003;
+  color: #ffd700;
 }
 
 .far {
@@ -166,13 +166,13 @@ h3 {
 
 /* Color/shape of close button cross */
 .bm-cross {
-  background: #ed9003;
+  background: #e4ac59;
 }
 .label-btn {
-  background-color: black;
+  background-color: #fedb37;
 }
 .label-btn :active {
-  background-color: #ed9003;
+  background-color: #fe37cc;
 }
 
 /*

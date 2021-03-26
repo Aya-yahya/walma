@@ -1,5 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../models/productModel.js'
+import nodemailer from 'nodemailer'
+import sendgrid from '@sendgrid/mail'
 import Order from '../models/orderModel.js'
 import axios from 'axios'
 
@@ -88,6 +90,31 @@ const getMyOrders = asyncHandler(async (req, res) => {
   // console.log(req)
   const orders = await Order.find({ user: req.user._id })
   res.json(orders)
+})
+
+const sendemail = asyncHandler(async (req, res) => {
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'ayameshref27@gmail.com',
+      pass: 'AyaYahya2721998',
+    },
+  })
+
+  var mailOptions = {
+    from: 'ayameshref27@gmail.com',
+    to: 'ayameshref27@gmail.com',
+    subject: 'Sending Email using Node.js',
+    text: 'That was easy!',
+  }
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error)
+    } else {
+      console.log('Email sent: ' + info.response)
+    }
+  })
 })
 
 const payMyOrders = asyncHandler(async (req, res) => {
@@ -217,6 +244,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 export {
   addOrderItems,
   getOrderById,
+  sendemail,
   updateOrderToPaid,
   getMyOrders,
   getOrders,

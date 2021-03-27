@@ -227,7 +227,7 @@ const ProductCreateScreen = ({ match, history }) => {
                 type='number'
                 placeholder='Enter disscount'
                 value={discount}
-                onChange={(e) => setDiscount(e.target.value)}
+                onChange={(e) => setDiscount(e.target.value / 100)}
               ></Form.Control>
             </Col>
           </Form.Row>

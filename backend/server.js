@@ -9,6 +9,7 @@ import mongooseIntl from 'mongoose-intl'
 import path from 'path'
 import productRoutes from './routes/productRoute.js'
 import colors from 'colors'
+import cityRoutes from './routes/cityRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import promocodeRoute from './routes/promoCodesRoute.js'
 import orderRoutes from './routes/orderRoutes.js'
@@ -31,6 +32,7 @@ mongoose.plugin(mongooseIntl, {
   defaultLanguage: 'en',
 })
 app.use('/api/products', productRoutes)
+app.use('/api/city', cityRoutes)
 app.use('/api/promocodes', promocodeRoute)
 app.use('/api/upload', uploadRoutes)
 app.use('/api/users', userRoutes)

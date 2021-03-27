@@ -55,9 +55,9 @@ const getOrderById = asyncHandler(async (req, res) => {
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
   console.log(req.body)
-  const order = await Order.findById(req.params.id).populate(
-    'orderItems.product'
-  )
+  const order = await Order.findById(req.params.id)
+    .populate('orderItems.product')
+    .populate('user', 'name email')
 
   if (order) {
     if (req.body.status === 'success') {
@@ -70,53 +70,30 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       })
       order.isPaid = true
       order.paidAt = Date.now()
+      if (order.user) {
+        var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'Info.walmakwt@gmail.com',
+            pass: process.env.GMAIL_PASS,
+          },
+        })
 
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'Info.walmakwt@gmail.com',
-          pass: process.env.GMAIL_PASS,
-        },
-      })
-
-      var mailOptions = {
-        from: 'Info.walmakwt@gmail.com',
-        to: 'Info.walmakwt@gmail.com',
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy!',
-      }
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          res.json(error)
-        } else {
-          res.json('Email sent: ' + info.response)
+        var mailOptions = {
+          from: 'Info.walmakwt@gmail.com',
+          to: order.user.email,
+          subject: 'Walma Coffee',
+          text: 'Your order pay is success',
         }
-      })
-    }
-    if (req.body.status === 'error') {
-      var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'Info.walmakwt@gmail.com',
-          pass: process.env.GMAIL_PASS,
-        },
-      })
 
-      var mailOptions = {
-        from: 'Info.walmakwt@gmail.com',
-        to: 'Info.walmakwt@gmail.com',
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy!',
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            res.json(error)
+          } else {
+            res.json('Email sent: ' + info.response)
+          }
+        })
       }
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          res.json(error)
-        } else {
-          res.json('Email sent: ' + info.response)
-        }
-      })
     }
 
     order.paymentResult = {
@@ -137,31 +114,6 @@ const getMyOrders = asyncHandler(async (req, res) => {
   // console.log(req)
   const orders = await Order.find({ user: req.user._id })
   res.json(orders)
-})
-
-const sendemail = asyncHandler(async (req, res) => {
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'Info.walmakwt@gmail.com',
-      pass: process.env.GMAIL_PASS,
-    },
-  })
-
-  var mailOptions = {
-    from: 'Info.walmakwt@gmail.com',
-    to: 'Info.walmakwt@gmail.com',
-    subject: 'Sending Email using Node.js',
-    text: 'That was easy!',
-  }
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      res.json(error)
-    } else {
-      res.json('Email sent: ' + info.response)
-    }
-  })
 })
 
 const payMyOrders = asyncHandler(async (req, res) => {
@@ -189,7 +141,7 @@ const payMyOrders = asyncHandler(async (req, res) => {
   }
 
   var { data } = await axios.post(
-    'https://apitest.myfatoorah.com/v2/InitiatePayment',
+    'https://api.myfatoorah.com/v2/InitiatePayment',
     data1,
     config2
   )
@@ -212,10 +164,9 @@ const payMyOrders = asyncHandler(async (req, res) => {
     CustomerMobile: '12345678',
     CustomerEmail: 'mail@mail.com',
     InvoiceValue: total,
-    CallBackUrl: `http://127.0.0.1:3000/order/${req.body._id}/success`,
-    ErrorUrl: `http://127.0.0.1:3000/order/${req.body._id}/error`,
-    //   CallBackUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/success`,
-    //  ErrorUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/error`,
+
+    CallBackUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/success`,
+    ErrorUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/error`,
     Language: 'en',
     CustomerReference: 'string',
     CustomerCivilId: 'string',
@@ -250,7 +201,7 @@ const payMyOrders = asyncHandler(async (req, res) => {
   })
 
   const { data: data2 } = await axios.post(
-    'https://apitest.myfatoorah.com/v2/ExecutePayment',
+    'https://api.myfatoorah.com/v2/ExecutePayment',
     dat,
     config
   )
@@ -280,7 +231,6 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 export {
   addOrderItems,
   getOrderById,
-  sendemail,
   updateOrderToPaid,
   getMyOrders,
   getOrders,

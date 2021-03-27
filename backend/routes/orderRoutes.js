@@ -7,7 +7,6 @@ import {
   getOrders,
   payMyOrders,
   updateOrderToDelivered,
-  sendemail,
 } from '../controllers/orderController.js'
 import { protect, admin } from '../middleware/authMiddleware.js'
 
@@ -15,7 +14,7 @@ const router = express.Router()
 
 router.route('/').post(addOrderItems).get(protect, admin, getOrders)
 router.route('/myorders').get(protect, getMyOrders)
-router.route('/send').get(sendemail)
+
 router.route('/:id').get(getOrderById)
 router.route('/:id/pay').put(updateOrderToPaid)
 router.route('/payid').post(payMyOrders)

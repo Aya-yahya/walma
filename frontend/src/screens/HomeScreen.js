@@ -52,6 +52,7 @@ const HomeScreen = ({ match }) => {
           type='button'
           className='label-btn'
           onClick={handleProducts}
+          style={{ borderRadius: '0px' }}
           active={state === 'products' ? true : false}
         >
           {t('products')}
@@ -61,6 +62,7 @@ const HomeScreen = ({ match }) => {
           type='button'
           className='label-btn '
           onClick={handleOffers}
+          style={{ borderRadius: '0px' }}
           active={state === 'offers' ? true : false}
         >
           {t('offers')}

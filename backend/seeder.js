@@ -4,6 +4,8 @@ import mongooseIntl from 'mongoose-intl'
 import colors from 'colors'
 import users from './data/users.js'
 import products from './data/products.js'
+import cities from './data/cities.js'
+import City from './models/city.js'
 import User from './models/userModel.js'
 import Product from './models/productModel.js'
 import Order from './models/orderModel.js'
@@ -20,6 +22,7 @@ mongoose.plugin(mongooseIntl, {
 const importData = async () => {
   try {
     await Order.deleteMany()
+    await City.deleteMany()
     await Product.deleteMany()
     await User.deleteMany()
 
@@ -35,6 +38,8 @@ const importData = async () => {
     })
     await Product.insertMany(sampleProducts)
 
+    const createCities = await City.insertMany(cities)
+
     console.log('data imported'.green)
     process.exit()
   } catch (error) {
@@ -45,6 +50,7 @@ const importData = async () => {
 
 const destroyData = async () => {
   try {
+    await City.deleteMany()
     await Order.deleteMany()
     await Product.deleteMany()
     await User.deleteMany()

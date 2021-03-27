@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { listCityDetails } from '../actions/cityAction'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { useTranslation } from 'react-i18next'
 
@@ -181,7 +182,8 @@ const OrderScreen = ({ match, history }) => {
 
               <p className='text-center'>
                 <strong>{t('address')}: </strong>
-                {order.shippingAddress.address},{order.shippingAddress.city}
+                {order.shippingAddress.governorate},{' '}
+                {order.shippingAddress.city},{order.shippingAddress.address}
               </p>
               <p className='text-center'>
                 <strong>{t('phonenumber')} </strong>
@@ -211,7 +213,9 @@ const OrderScreen = ({ match, history }) => {
 
               <p className='text-center'>
                 <strong>{t('method')}: </strong>
-                {order.paymentMethod === '1' ? 'KENET' : 'VISA/MASTER'}
+                {order.paymentMethod === '1' && 'KENET'}
+                {order.paymentMethod === '2' && 'VISA/MASTER'}
+                {order.paymentMethod === '3' && 'CASH'}
               </p>
             </ListGroup.Item>
             <ListGroup.Item>
@@ -278,7 +282,7 @@ const OrderScreen = ({ match, history }) => {
                   <Col>{order.totalPrice}KD</Col>
                 </Row>
               </ListGroup.Item>
-              {!order.isPaid && (
+              {!order.isPaid && order.paymentMethod !== '3' && (
                 <ListGroup.Item className='center'>
                   <Button
                     onClick={payHandler}

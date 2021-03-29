@@ -83,7 +83,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
           from: 'Info.walmakwt@gmail.com',
           to: order.user.email,
           subject: 'Walma Coffee',
-          text: 'Your order pay is success',
+          text: `Your order with Id${order._id} has been paid successfully `,
         }
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -165,8 +165,8 @@ const payMyOrders = asyncHandler(async (req, res) => {
     CustomerEmail: 'mail@mail.com',
     InvoiceValue: total,
 
-    CallBackUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/success`,
-    ErrorUrl: `https://walmaapp.herokuapp.com/order/${req.body._id}/error`,
+    CallBackUrl: `http://walmakwt.com/order/${req.body._id}/success`,
+    ErrorUrl: `http://walmakwt.com/order/${req.body._id}/error`,
     Language: 'en',
     CustomerReference: 'string',
     CustomerCivilId: 'string',

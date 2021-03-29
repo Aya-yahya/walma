@@ -27,10 +27,12 @@ app.use(express.json())
 app.use((req, res, next) => {
   next()
 })
+
 mongoose.plugin(mongooseIntl, {
   languages: ['en', 'ar'],
   defaultLanguage: 'en',
 })
+
 app.use('/api/products', productRoutes)
 app.use('/api/city', cityRoutes)
 app.use('/api/promocodes', promocodeRoute)
@@ -55,3 +57,7 @@ app.use(notFound)
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
+app.listen(
+  PORT,
+  console.log(`server running on port ${process.env.PORT}`.yellow.bold)
+)
